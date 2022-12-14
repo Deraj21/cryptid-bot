@@ -13,7 +13,7 @@ export default function LandingPage() {
                 <img src={title} alt="cryptid-title" />
                 
                 <Link to="/setup">
-                    <button class="btn">Start Game</button>
+                    <button className="btn">Start Game</button>
                 </Link>
             </div>
 

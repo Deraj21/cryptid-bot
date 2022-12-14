@@ -5,16 +5,46 @@
         .numbers-container
             min-width: 50px // TODO: hard-coded; change later
 
-        .draggable-number
-            font-size: 30px
-            border: 3px solid white
-            border-radius: 50%
+            .draggable-number
+                font-size: 30px
+                border: 3px solid white
+                border-radius: 50%
+                
+                width: 1.2em
+                height: 1.2em
+                text-align: center
+                cursor: grab
+    
+        .chunks-container
+            display: flex
+            flex-wrap: wrap
+            max-width: 930px
             
-            width: 1.2em
-            height: 1.2em
-            text-align: center
-        
-        .map-chunk
-            height: 100px
-            width: 300px
-            border: 1px solid black
+            .map-chunk
+                margin: -5px 0px
+                
+                .chunk-image
+                    cursor: grab
+                    transform: rotate(0deg)
+                    transition-delay: .1s
+                    transition-duration: .3s
+
+                    &:hover
+                        transform: scale(1.05)
+                        filter: brightness(1.2)
+                
+                .draggedOver
+                    transform: scale(1.05)
+                    filter: brightness(1.2)
+
+                .chunk-image-placeholder
+                    cursor: pointer
+                
+                .chunk-image.rotated
+                    transition-delay: .1s
+                    transition-duration: .3s
+                    transform: rotate(180deg)
+                    
+                
+
+            

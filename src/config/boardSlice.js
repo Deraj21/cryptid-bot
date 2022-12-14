@@ -25,7 +25,14 @@ export const boardSlice = createSlice({
                 type: ""
             }
         },
-        boardSetup: [ null, null, null, null, null, null ],
+        boardSetup: [
+            { chunkId: null, rotated: false },
+            { chunkId: null, rotated: false },
+            { chunkId: null, rotated: false },
+            { chunkId: null, rotated: false },
+            { chunkId: null, rotated: false },
+            { chunkId: null, rotated: false },
+        ],
         availableChunks: [ 0, 1, 2, 3, 4, 5 ],
         draggingChunk: null
     },
@@ -34,10 +41,19 @@ export const boardSlice = createSlice({
             state.players[action.payload.key].type = action.payload.type
         },
         slotDraggingChunk: (state, action) => {
-            state.boardSetup[action.payload] = state.draggingChunk
+            state.boardSetup[action.payload].chunkId = state.draggingChunk
             let i = state.availableChunks.findIndex(v => v === state.draggingChunk)
-            state.availableChunks.splice(i, 1)
+            if (i !== -1) {
+                state.availableChunks.splice(i, 1)
+            }
             state.draggingChunk = null
+        },
+        removeChunk: (state, action) => {
+            state.boardSetup[action.payload].chunkId = null
+        },
+        rotateChunk: (state, action) => {
+            let i = state.boardSetup.findIndex(val => val.chunkId === action.payload)
+            state.boardSetup[i].rotated = !state.boardSetup[i].rotated
         },
         updateDraggingChunk: (state, action) => {
             state.draggingChunk = action.payload
@@ -45,7 +61,7 @@ export const boardSlice = createSlice({
     }
 })
 
-export const { updatePlayer, slotDraggingChunk, updateDraggingChunk } = boardSlice.actions
+export const { updatePlayer, slotDraggingChunk, removeChunk, rotateChunk, updateDraggingChunk } = boardSlice.actions
 
 export default boardSlice.reducer
 

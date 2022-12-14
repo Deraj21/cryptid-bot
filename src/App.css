@@ -93,24 +93,54 @@ h1 {
   background-repeat: no-repeat;
 }
 
+.SetupPage {
+  background-color: #BADDA55;
+}
+
 .BoardSetup .board-container {
   display: flex;
 }
 .BoardSetup .board-container .numbers-container {
   min-width: 50px;
 }
-.BoardSetup .board-container .draggable-number {
+.BoardSetup .board-container .numbers-container .draggable-number {
   font-size: 30px;
   border: 3px solid white;
   border-radius: 50%;
   width: 1.2em;
   height: 1.2em;
   text-align: center;
+  cursor: grab;
 }
-.BoardSetup .board-container .map-chunk {
-  height: 100px;
-  width: 300px;
-  border: 1px solid black;
+.BoardSetup .board-container .chunks-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 930px;
+}
+.BoardSetup .board-container .chunks-container .map-chunk {
+  margin: -5px 0px;
+}
+.BoardSetup .board-container .chunks-container .map-chunk .chunk-image {
+  cursor: grab;
+  transform: rotate(0deg);
+  transition-delay: 0.1s;
+  transition-duration: 0.3s;
+}
+.BoardSetup .board-container .chunks-container .map-chunk .chunk-image:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+}
+.BoardSetup .board-container .chunks-container .map-chunk .draggedOver {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+}
+.BoardSetup .board-container .chunks-container .map-chunk .chunk-image-placeholder {
+  cursor: pointer;
+}
+.BoardSetup .board-container .chunks-container .map-chunk .chunk-image.rotated {
+  transition-delay: 0.1s;
+  transition-duration: 0.3s;
+  transform: rotate(180deg);
 }
 
 /*# sourceMappingURL=App.css.map */

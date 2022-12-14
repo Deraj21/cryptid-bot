@@ -1,7 +1,9 @@
 import { useSelector, useDispatch } from "react-redux"
 import { slotDraggingChunk, updateDraggingChunk } from "../config/boardSlice"
+import MapChunk from "./MapChunk"
 
 export default function BoardSetup() {
+    // ducks
     const boardSetup = useSelector(s => s.board.boardSetup)
     const draggingChunk = useSelector(s => s.board.draggingChunk)
     const availableChunks = useSelector(s => s.board.availableChunks)
@@ -13,7 +15,10 @@ export default function BoardSetup() {
                 <div key={`key${i}`}
                     draggable="true"
                     className="draggable-number"
-                    onDragStart={ e => { dispatch(updateDraggingChunk(n)) } }
+                    onDragStart={ e => {
+                        dispatch(updateDraggingChunk(n))
+                        e.dataTransfer.setData("text/plain", "")
+                    }}
                 >
                     <p>{n + 1}</p>
                 </div>
@@ -23,20 +28,13 @@ export default function BoardSetup() {
     let mapChunks = boardSetup
         .map((chunk, index) => {
             return (
-                <div className="map-chunk"
-                    droppable="true"
-                    id={`mapchunk-${chunk}`} key={`key-${index}`}
-                    style={{ backgroundImage: chunk ? `url(../media/board-chunks/${1}.png)` : ''}}
-                    onDragEnter={e => e.preventDefault()}
-                    onDragOver={e => e.preventDefault()}
-                    onDrop={e => {
-                        dispatch(slotDraggingChunk(index))
-                    }}
-                >
-                    <p>{chunk !== null ? chunk+1 : ''}</p>
-                </div>
+                <MapChunk key={index} chunkId={chunk.chunkId} index={index} rotated={chunk.rotated} />
             )
         })
+
+    console.log(
+        boardSetup.map(chunk => chunk.chunkId + " " + chunk.rotated).join('\n')
+    )
 
     return (
         <div className="BoardSetup">
