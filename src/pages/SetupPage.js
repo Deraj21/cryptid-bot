@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { updatePlayer } from "../config/boardSlice"
+import { updatePlayer, updateIsAdvancedMode } from "../config/boardSlice"
+import { Switch, FormControl, FormControlLabel } from '@mui/material'
 
 import BoardSetup from "../components/BoardSetup"
 
 export default function SetupPage() {
 
     const players = useSelector(s => s.board.players)
+    const isAdvancedMode = useSelector(s => s.board.isAdvancedMode)
     const dispatch = useDispatch()
     
     let options = [
@@ -15,7 +17,13 @@ export default function SetupPage() {
         { value: "bot",     name: "Bot" }
     ].map((option, i) => {
         return (
-            <option key={`option-${i}`} value={option.value} >{option.name}</option>
+            <option
+                className={`${option.value}`}
+                key={`option-${i}`}
+                value={option.value}
+            >
+                {option.name}
+            </option>
         )
     })
 
@@ -27,7 +35,7 @@ export default function SetupPage() {
             <div key={`select-${key}`} className="select-block">
                 <label htmlFor={id}>{name}</label>
 
-                <select id={id}
+                <select id={id} className={`player-select ${type}`}
                     onChange={ e => {
                         dispatch(updatePlayer({
                             key: key,
@@ -47,6 +55,15 @@ export default function SetupPage() {
             <div className="player-setup">
                 { selects }
             </div>
+            
+            <FormControlLabel
+                control={<Switch
+                    checked={isAdvancedMode}
+                    onChange={e => {
+                        dispatch(updateIsAdvancedMode(e.target.checked))
+                    }}
+                />}
+                label="Advanced Mode" />
 
             <BoardSetup />
         </div>

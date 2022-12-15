@@ -38,7 +38,6 @@ export default function MapChunk(props) {
                 e.target.classList.add("draggedOver")
             }}
             onDragLeave={e => {
-                console.log('on drag leave')
                 e.target.classList.remove("draggedOver")
             }}
             onDrop={e => {

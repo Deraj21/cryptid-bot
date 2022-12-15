@@ -34,7 +34,8 @@ export const boardSlice = createSlice({
             { chunkId: null, rotated: false },
         ],
         availableChunks: [ 0, 1, 2, 3, 4, 5 ],
-        draggingChunk: null
+        draggingChunk: null,
+        isAdvancedMode: false
     },
     reducers: {
         updatePlayer: (state, action) => {
@@ -57,11 +58,14 @@ export const boardSlice = createSlice({
         },
         updateDraggingChunk: (state, action) => {
             state.draggingChunk = action.payload
+        },
+        updateIsAdvancedMode: (s, a) => {
+            s.isAdvancedMode = a.payload
         }
     }
 })
 
-export const { updatePlayer, slotDraggingChunk, removeChunk, rotateChunk, updateDraggingChunk } = boardSlice.actions
+export const { updatePlayer, slotDraggingChunk, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode } = boardSlice.actions
 
 export default boardSlice.reducer
 

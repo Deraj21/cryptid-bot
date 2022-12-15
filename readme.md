@@ -11,3 +11,16 @@ Rachel and I enjoy the board game “Cryptid,” but it can only be played with 
 - When it’s the robot’s turn, they randomly select a player, and randomly select a hex that doesn’t already have a cube on it. The player answers yes or no.
   - If no, the bot will play a cube somewhere randomly on the board where the cryptid cannot be, according to their clue
 - The bot will never initiate a search
+
+## todo before starting the "play game" functionality
+- ~~add spacing around the color-player-picker drop-downs~~
+- add "finished" button at the bottom
+- add "advanced mode" toggle
+- add structure placement bar
+  - "advanced mode" toggle adds / removes the black structures
+
+## Bugs
+- board chunks can be placed on top of other board chunks, effectily 'deleting' one of the chunks from being able to be placed
+- sometimes board chunks won't allow drag and drop
+- would be nice if board chunks retained their rotation state when being moved
+

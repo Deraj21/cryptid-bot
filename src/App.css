@@ -93,8 +93,25 @@ h1 {
   background-repeat: no-repeat;
 }
 
-.SetupPage {
-  background-color: #BADDA55;
+.SetupPage .select-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+  width: 170px;
+}
+.SetupPage .select-block select, .SetupPage .select-block option {
+  background-color: lightgray;
+  color: dimgray;
+  padding: 5px 10px;
+}
+.SetupPage .select-block .player {
+  background-color: #79C7C2;
+  color: black;
+}
+.SetupPage .select-block .bot {
+  background-color: #DBE388;
+  color: black;
 }
 
 .BoardSetup .board-container {
@@ -116,6 +133,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   max-width: 930px;
+  margin: 10px;
 }
 .BoardSetup .board-container .chunks-container .map-chunk {
   margin: -5px 0px;
@@ -141,6 +159,10 @@ h1 {
   transition-delay: 0.1s;
   transition-duration: 0.3s;
   transform: rotate(180deg);
+}
+.BoardSetup .board-container .structures-container .structure {
+  border: 3px solid white;
+  margin: 5px;
 }
 
 /*# sourceMappingURL=App.css.map */
