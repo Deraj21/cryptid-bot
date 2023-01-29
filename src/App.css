@@ -133,10 +133,6 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   max-width: 930px;
-  margin: 10px;
-}
-.BoardSetup .board-container .chunks-container .map-chunk {
-  margin: -5px 0px;
 }
 .BoardSetup .board-container .chunks-container .map-chunk .chunk-image {
   cursor: grab;
@@ -153,6 +149,8 @@ h1 {
   filter: brightness(1.2);
 }
 .BoardSetup .board-container .chunks-container .map-chunk .chunk-image-placeholder {
+  height: 160px;
+  width: 250px;
   cursor: pointer;
 }
 .BoardSetup .board-container .chunks-container .map-chunk .chunk-image.rotated {
@@ -161,7 +159,6 @@ h1 {
   transform: rotate(180deg);
 }
 .BoardSetup .board-container .structures-container .structure {
-  border: 3px solid white;
   margin: 5px;
 }
 

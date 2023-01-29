@@ -1,0 +1,31 @@
+.Ruler {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* align-items: baseline; */
+    background-color: whitesmoke;
+    color: black;
+}
+
+.ruler-description {
+    /* position:  */
+    left: 0px;
+    top: 0px;
+    /* color: black; */
+}
+
+.tick-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.tick > p {
+    font-size: 10px;
+    line-height: 0px;
+    background-color: white-smoke;
+}
+
+.tick:first-child, .tick:last-child {
+    margin: -1px;
+}

@@ -1,6 +1,59 @@
 import { useSelector, useDispatch } from "react-redux"
 import { slotDraggingChunk, updateDraggingChunk } from "../config/boardSlice"
 import MapChunk from "./MapChunk"
+import Ruler from "./Ruler"
+
+import p1 from "../media/structures/p1.png"
+import p2 from "../media/structures/p2.png"
+import p3 from "../media/structures/p3.png"
+import p4 from "../media/structures/p4.png"
+import s1 from "../media/structures/s1.png"
+import s2 from "../media/structures/s2.png"
+import s3 from "../media/structures/s3.png"
+import s4 from "../media/structures/s4.png"
+
+const structureData = [
+    {
+        id: "as-white",
+        name: "Abandoned Shack, White",
+        image: p1
+    },
+    {
+        id: "ss-white",
+        name: "Standing Stone, White",
+        image: s1
+    },
+    {
+        id: "as-green",
+        name: "Abandoned Shack, Green",
+        image: p2
+    },
+    {
+        id: "ss-green",
+        name: "Standing Stone, Green",
+        image: s2
+    },
+    {
+        id: "as-blue",
+        name: "Abandoned Shack, Blue",
+        image: p3
+    },
+    {
+        id: "ss-blue",
+        name: "Standing Stone, Blue",
+        image: s3
+    },
+    {
+        id: "as-black",
+        name: "Abandoned Shack, Black",
+        image: p4
+    },
+    {
+        id: "ss-black",
+        name: "Standing Stone, Black",
+        image: s4
+    },
+]
 
 export default function BoardSetup() {
     // ducks
@@ -26,25 +79,16 @@ export default function BoardSetup() {
             )
         })
     
-    let structureNames = [
-        "white tri",
-        "white hex",
-        "green tri",
-        "green hex",
-        "blue  tri",
-        "blue  hex",
-        "black tri",
-        "black hex"
-    ]
-    let structures = structureNames
+    let structures = structureData
         .map(structure => {
-            console.log(structure.includes("black"))
+            let { id, name, image } = structure
             return (
-                <div className="structure"
+                <div className="structure" key={id}
                     draggable="true"
-                    hidden={structure.includes("black") ? !isAdvancedMode : false}
+                    hidden={id.includes("black") ? !isAdvancedMode : false}
                 >
-                    <p>{structure}</p>
+                    {/* <p>{name}</p> */}
+                    <img alt={name} src={image}/>
                 </div>
             )
         })
@@ -59,6 +103,7 @@ export default function BoardSetup() {
     return (
         <div className="BoardSetup">
             <h1>Setup Board</h1>
+            {/* <Ruler numTicks={21} spaceBetween={25} unit={"px"} hasTallTicks={true} tallTickSpacing={4} marginLeft={"60px"}/> */}
 
             <div className="board-container">
 

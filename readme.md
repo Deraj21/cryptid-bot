@@ -3,7 +3,7 @@
 ## Basic Idea
 Rachel and I enjoy the board game “Cryptid,” but it can only be played with 3 or more people. There is a variant that allows for 2 people, but it’s actually just a 4 player game, but each player gets 2 clues and 2 colors of tokens. I want to fix this by creating a “robot” (an app) that will act as the 3rd person.
 
-## How to pull it off
+### How to pull it off
 - The app displays the board and structures for the particular game setup
 - During their turn, players can “ask” the bot about a hex, and if according to their clue, can the Cryptid reside there
   - The bot replies with a yes or no (placing a cylinder or a cube respectively)
@@ -12,12 +12,31 @@ Rachel and I enjoy the board game “Cryptid,” but it can only be played with 
   - If no, the bot will play a cube somewhere randomly on the board where the cryptid cannot be, according to their clue
 - The bot will never initiate a search
 
-## todo before starting the "play game" functionality
-- ~~add spacing around the color-player-picker drop-downs~~
+---
+
+## Tech Used
+- react, react-router, redux
+- materialUI (mui), 
+
+---
+
+## Todo
+
+### "setup game" functionality
+- ~~add structure placement bar~~
+  - ~~"advanced mode" toggle adds / removes the black structures~~
+  - ~~structure bar uses images~~
+- LEFT OFF: change board chunks to use div with background-image instead of img element
+- dragging from structure bar places on the board
+- structure bar doesn't appear until all the map chunks are in place
+- map chunk bar uses images with big numbers on them
 - add "finished" button at the bottom
-- add "advanced mode" toggle
-- add structure placement bar
-  - "advanced mode" toggle adds / removes the black structures
+- 
+
+### "play game" functionality
+- foobar
+
+---
 
 ## Bugs
 - board chunks can be placed on top of other board chunks, effectily 'deleting' one of the chunks from being able to be placed
