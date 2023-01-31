@@ -1,7 +1,7 @@
 # Cryptid Bot
 
 ## Basic Idea
-Rachel and I enjoy the board game “Cryptid,” but it can only be played with 3 or more people. There is a variant that allows for 2 people, but it’s actually just a 4 player game, but each player gets 2 clues and 2 colors of tokens. I want to fix this by creating a “robot” (an app) that will act as the 3rd person.
+My wife and I enjoy the board game “Cryptid,” but it can only be played with 3 or more people. There is a variant that allows for 2 people, but it’s actually just a 4 player game, and each player gets 2 clues and 2 colors of tokens. I want to fix this by creating a “robot” (an app) that will act as the 3rd person.
 
 ### How to pull it off
 - The app displays the board and structures for the particular game setup
@@ -26,12 +26,14 @@ Rachel and I enjoy the board game “Cryptid,” but it can only be played with 
 - ~~add structure placement bar~~
   - ~~"advanced mode" toggle adds / removes the black structures~~
   - ~~structure bar uses images~~
-- LEFT OFF: change board chunks to use div with background-image instead of img element
-- dragging from structure bar places on the board
+- ~~change board chunks to use div with background-image instead of img element~~
+- ~~dragging structure shows mask where structure item will be placed~~
+- LEFT OFF: dragging from structure bar places on the board
+- dragging from structure bar stores structures in the state
 - structure bar doesn't appear until all the map chunks are in place
 - map chunk bar uses images with big numbers on them
 - add "finished" button at the bottom
-- 
+- dragging map chunk should *not show mask
 
 ### "play game" functionality
 - foobar
@@ -39,7 +41,7 @@ Rachel and I enjoy the board game “Cryptid,” but it can only be played with 
 ---
 
 ## Bugs
-- board chunks can be placed on top of other board chunks, effectily 'deleting' one of the chunks from being able to be placed
+- board chunks can be placed on top of other board chunks, effectively 'deleting' one of the chunks from being able to be placed
 - sometimes board chunks won't allow drag and drop
 - would be nice if board chunks retained their rotation state when being moved
 

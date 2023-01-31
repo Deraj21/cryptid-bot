@@ -11,8 +11,12 @@ import chunk_image_5 from "../media/board-chunks/5.png"
 import placeholderChunk from "../media/board-chunks/placeholder.png"
 
 import p1 from "../media/structures/p1.png"
+import mask from '../media/mask.png'
+import redDot from '../media/red-dot.png'
 
 const chunkImages = [ chunk_image_0, chunk_image_1, chunk_image_2, chunk_image_3, chunk_image_4, chunk_image_5 ]
+const MASK_WIDTH = 54
+const MASK_HEIGHT = 48
 
 export default function MapChunk(props) {
     // ducks
@@ -20,9 +24,13 @@ export default function MapChunk(props) {
 
     // local state
     const [droppable, setDroppable] = useState(true)
+    const [maskLocation, setMaskLocation] = useState({x: null, y: null})
 
     // props
     const { chunkId, index, rotated } = props
+    let chunkBackground = maskLocation.x === null ? '' :
+    `${maskLocation.x - MASK_WIDTH / 2}px ${maskLocation.y - MASK_HEIGHT / 2}px no-repeat url(${mask}), `
+    chunkBackground += `no-repeat url(${chunkImages[chunkId]})`
 
     return (
         <div className="map-chunk"
@@ -33,18 +41,25 @@ export default function MapChunk(props) {
                 e.preventDefault()
                 let x = e.nativeEvent.offsetX
                 let y = e.nativeEvent.offsetY
-                let H = e.target.height
+                let H = 160 // e.target.height
                 let h = H / 7
-                let W = e.target.width
+                let W = 250 // e.target.width
                 let w = W / 9.5
 
                 let r = Math.floor( w * Math.sin(60 / 180 * Math.PI) )
 
+                for (let col = 0; col < 6; col++){
+                    for (let row = 0; row < 3; row++) {
+                        let px = col * 1.5 * w + w
+                        let py = col % 2 === 0 ? row * 2 * h + h : row * 2 * h + (2 * h)
 
-
-                console.log(r)
-
-                // console.log(e.target.height)
+                        let d = Math.sqrt( Math.pow(x - px, 2) + Math.pow(y - py, 2) )
+                        if (d < r) {
+                            setMaskLocation({x: px, y: py})
+                            return
+                        }
+                    }
+                }
             }}
             onDragStart={ e => {
                 dispatch(updateDraggingChunk(chunkId))
@@ -57,22 +72,23 @@ export default function MapChunk(props) {
             }}
             onDragLeave={e => {
                 e.target.classList.remove("draggedOver")
+                setMaskLocation({x: null, y: null})
             }}
             onDrop={e => {
-                let x = e.clientX - e.target.x
-                let y = e.clientY - e.target.y
-                console.log(`${x}, ${e.clientX}, ${e.target.x}`)
+                // TODO: sus out if structure or map chunk
 
                 if(droppable) {
                     dispatch(slotDraggingChunk(index))
                     setDroppable(false)
                     let fromId = e.dataTransfer.getData("text/plain")
-                    if (fromId != "" && fromId != index) {
+                    if (fromId !== "" && fromId !== index) {
                         dispatch(removeChunk(fromId))
                     }
                 } else {
                     // nothing?
                 }
+
+                setMaskLocation({x: null, y: null})
             }}
             onClick={e => {
                 e.target.classList.toggle("rotated")
@@ -83,25 +99,21 @@ export default function MapChunk(props) {
             {
                 chunkId !== null
                 ?
-                <img className={`chunk-image${rotated ? " rotated" : ""}`}
-                    src={chunkImages[chunkId]}
-                    alt="map-chunk"
+                <div className={`chunk-image${rotated ? " rotated" : ""}`}
+                    style={{
+                        background: chunkBackground
+                    }}
                     draggable={""+!droppable}
                 />
                 :
                 <div className="chunk-image-placeholder"
-                    src={placeholderChunk}
                     alt="placeholder-chunk"
                     draggable={""+!droppable}
                     style={{
-                        background: `${15}px ${12}px no-repeat url(${p1}),
+                        background: `${0}px ${0}px no-repeat url(${p1}),
                         no-repeat url(${placeholderChunk})`,
                         backgroundRepeat: 'no-repeat',
-                        backgroundPosition: '10px 10px'
                     }}
-
-            // background: center / contain no-repeat url("../../media/examples/firefox-logo.svg"),
-            // #eee 35% url("../../media/examples/lizard.png");
                 ></div>
             }
 

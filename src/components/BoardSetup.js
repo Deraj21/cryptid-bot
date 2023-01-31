@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux"
+import { useState } from "react"
 import { slotDraggingChunk, updateDraggingChunk } from "../config/boardSlice"
 import MapChunk from "./MapChunk"
 import Ruler from "./Ruler"
@@ -63,6 +64,9 @@ export default function BoardSetup() {
     const isAdvancedMode = useSelector(s => s.board.isAdvancedMode)
     const dispatch = useDispatch()
 
+    // state
+    const [mapChunksDone, setMapChunksDone] = useState(false)
+
     let draggableNumbers = availableChunks
         .map((n, i) => {
             return (
@@ -107,17 +111,21 @@ export default function BoardSetup() {
 
             <div className="board-container">
 
-                <div className="numbers-container">
-                    { draggableNumbers }
-                </div>
+                {
+                    mapChunksDone ?
+                    <div className="structures-container">
+                        { structures }
+                    </div>
+                    :
+                    <div className="numbers-container">
+                        { draggableNumbers }
+                    </div>
+                }
 
                 <div className="chunks-container">
                     { mapChunks }
                 </div>
 
-                <div className="structures-container">
-                    { structures }
-                </div>
 
             </div>
 

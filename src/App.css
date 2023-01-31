@@ -116,14 +116,17 @@ h1 {
 
 .BoardSetup .board-container {
   display: flex;
+  flex-direction: column;
 }
 .BoardSetup .board-container .numbers-container {
+  display: flex;
   min-width: 50px;
 }
 .BoardSetup .board-container .numbers-container .draggable-number {
   font-size: 30px;
   border: 3px solid white;
   border-radius: 50%;
+  margin: 10px 5px;
   width: 1.2em;
   height: 1.2em;
   text-align: center;
@@ -137,15 +140,15 @@ h1 {
 .BoardSetup .board-container .chunks-container .map-chunk .chunk-image {
   cursor: grab;
   transform: rotate(0deg);
-  transition-delay: 0.1s;
-  transition-duration: 0.3s;
+  height: 160px;
+  width: 250px;
 }
 .BoardSetup .board-container .chunks-container .map-chunk .chunk-image:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
   filter: brightness(1.2);
 }
 .BoardSetup .board-container .chunks-container .map-chunk .draggedOver {
-  transform: scale(1.05);
+  transform: scale(1.02);
   filter: brightness(1.2);
 }
 .BoardSetup .board-container .chunks-container .map-chunk .chunk-image-placeholder {
@@ -157,6 +160,9 @@ h1 {
   transition-delay: 0.1s;
   transition-duration: 0.3s;
   transform: rotate(180deg);
+}
+.BoardSetup .board-container .structures-container {
+  display: flex;
 }
 .BoardSetup .board-container .structures-container .structure {
   margin: 5px;
