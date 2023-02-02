@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { slotDraggingChunk, updateDraggingChunk, removeChunk, rotateChunk } from "../config/boardSlice"
+import { slotDraggingChunk, updateDraggingChunk, removeChunk, rotateChunk, placeStructure } from "../config/boardSlice"
 
 import chunk_image_0 from "../media/board-chunks/0.png"
 import chunk_image_1 from "../media/board-chunks/1.png"
@@ -17,20 +17,39 @@ import redDot from '../media/red-dot.png'
 const chunkImages = [ chunk_image_0, chunk_image_1, chunk_image_2, chunk_image_3, chunk_image_4, chunk_image_5 ]
 const MASK_WIDTH = 54
 const MASK_HEIGHT = 48
+const STRUCTURE_WIDTH = 24
+const STRUCTURE_HEIGHT = 24
 
 export default function MapChunk(props) {
     // ducks
     const dispatch = useDispatch()
+    const draggingChunk = useSelector(s => s.board.draggingChunk)
+    const structures = useSelector(s => s.board.structures)
 
     // local state
     const [droppable, setDroppable] = useState(true)
-    const [maskLocation, setMaskLocation] = useState({x: null, y: null})
+    const [maskPosition, setMaskPosition] = useState({x: null, y: null})
+    const [maskCoords, setMaskCoords] = useState({row: null, col: null})
 
     // props
     const { chunkId, index, rotated } = props
-    let chunkBackground = maskLocation.x === null ? '' :
-    `${maskLocation.x - MASK_WIDTH / 2}px ${maskLocation.y - MASK_HEIGHT / 2}px no-repeat url(${mask}), `
-    chunkBackground += `no-repeat url(${chunkImages[chunkId]})`
+    
+    // create background image
+    let background = ''
+    if (maskPosition.x !== null) {
+        background += `${maskPosition.x - MASK_WIDTH / 2}px ${maskPosition.y - MASK_HEIGHT / 2}px no-repeat url(${mask}), `
+    }
+
+    structures.map(structure => {
+        if (chunkId && structure.chunkId === chunkId){
+            let { x, y } = structure.position
+            let posX = x - STRUCTURE_WIDTH / 2
+            let posY = y - STRUCTURE_HEIGHT / 2
+            background += `${posX}px ${posY}px no-repeat url(${structure.image}), `
+        }
+    })
+
+    background += `no-repeat url(${chunkImages[chunkId]})`
 
     return (
         <div className="map-chunk"
@@ -55,7 +74,8 @@ export default function MapChunk(props) {
 
                         let d = Math.sqrt( Math.pow(x - px, 2) + Math.pow(y - py, 2) )
                         if (d < r) {
-                            setMaskLocation({x: px, y: py})
+                            setMaskPosition({x: px, y: py})
+                            setMaskCoords({row, col})
                             return
                         }
                     }
@@ -72,28 +92,35 @@ export default function MapChunk(props) {
             }}
             onDragLeave={e => {
                 e.target.classList.remove("draggedOver")
-                setMaskLocation({x: null, y: null})
+                setMaskPosition({x: null, y: null})
+                setMaskCoords({row: null, col: null})
             }}
             onDrop={e => {
                 // TODO: sus out if structure or map chunk
+                let dataTransfer = e.dataTransfer.getData("text/plain")
 
-                if(droppable) {
+                if (draggingChunk !== null && droppable) {
                     dispatch(slotDraggingChunk(index))
                     setDroppable(false)
-                    let fromId = e.dataTransfer.getData("text/plain")
-                    if (fromId !== "" && fromId !== index) {
-                        dispatch(removeChunk(fromId))
+                    if (dataTransfer !== "" && dataTransfer !== index) {
+                        dispatch(removeChunk(dataTransfer))
                     }
-                } else {
-                    // nothing?
+                } else if (!droppable && dataTransfer !== '') {
+                    dispatch(placeStructure({
+                        id: dataTransfer,
+                        chunkId: chunkId,
+                        position: maskPosition,
+                        coords: maskCoords
+                    }))
                 }
 
-                setMaskLocation({x: null, y: null})
+                setMaskPosition({x: null, y: null})
+                setMaskCoords({row: null, col: null})
             }}
             onClick={e => {
                 e.target.classList.toggle("rotated")
-                // TODO: update state with rotation
-                // dispatch(rotateChunk(chunkId))
+                // BUG: weird rotation behavior
+                dispatch(rotateChunk(chunkId))
             }}
         >
             {
@@ -101,7 +128,7 @@ export default function MapChunk(props) {
                 ?
                 <div className={`chunk-image${rotated ? " rotated" : ""}`}
                     style={{
-                        background: chunkBackground
+                        background: background
                     }}
                     draggable={""+!droppable}
                 />
@@ -110,8 +137,7 @@ export default function MapChunk(props) {
                     alt="placeholder-chunk"
                     draggable={""+!droppable}
                     style={{
-                        background: `${0}px ${0}px no-repeat url(${p1}),
-                        no-repeat url(${placeholderChunk})`,
+                        background: `no-repeat url(${placeholderChunk})`,
                         backgroundRepeat: 'no-repeat',
                     }}
                 ></div>

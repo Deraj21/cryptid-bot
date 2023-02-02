@@ -23,17 +23,14 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 ## Todo
 
 ### "setup game" functionality
-- ~~add structure placement bar~~
-  - ~~"advanced mode" toggle adds / removes the black structures~~
-  - ~~structure bar uses images~~
-- ~~change board chunks to use div with background-image instead of img element~~
-- ~~dragging structure shows mask where structure item will be placed~~
-- LEFT OFF: dragging from structure bar places on the board
-- dragging from structure bar stores structures in the state
+- ~~LEFT OFF: dragging from structure bar places on the board~~
+- ~~dragging from structure bar stores structures in the state~~
 - structure bar doesn't appear until all the map chunks are in place
+  - `design session:` should I have a button that says "done placing map chunks", or should the structures just appear when all map chunks are gone?
 - map chunk bar uses images with big numbers on them
 - add "finished" button at the bottom
-- dragging map chunk should *not show mask
+- dragging map chunk should *not* show mask
+- user should not be allowed to place a structure where there already is one
 
 ### "play game" functionality
 - foobar
@@ -44,4 +41,9 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 - board chunks can be placed on top of other board chunks, effectively 'deleting' one of the chunks from being able to be placed
 - sometimes board chunks won't allow drag and drop
 - would be nice if board chunks retained their rotation state when being moved
+- there's some crazy animation stuff going on when rotating, and dragging-dropping
+  - maybe set all css animation settings to 0s and then start experimenting from there
+- 
+
+
 

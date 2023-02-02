@@ -93,6 +93,12 @@ h1 {
   background-repeat: no-repeat;
 }
 
+.SetupPage {
+  margin-left: 30px;
+}
+.SetupPage .player-setup {
+  margin-left: 10px;
+}
 .SetupPage .select-block {
   display: flex;
   justify-content: space-between;

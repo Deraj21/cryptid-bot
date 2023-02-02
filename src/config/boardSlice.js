@@ -1,5 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// structure images
+import p1 from "../media/structures/p1.png"
+import p2 from "../media/structures/p2.png"
+import p3 from "../media/structures/p3.png"
+import p4 from "../media/structures/p4.png"
+import s1 from "../media/structures/s1.png"
+import s2 from "../media/structures/s2.png"
+import s3 from "../media/structures/s3.png"
+import s4 from "../media/structures/s4.png"
+
 export const boardSlice = createSlice({
     name: 'board',
     initialState: {
@@ -25,6 +35,72 @@ export const boardSlice = createSlice({
                 type: ""
             }
         },
+        structures: [
+            {
+                id: "as-white",
+                name: "Abandoned Shack, White",
+                image: p1,
+                chunkId: null,
+                coords: null,
+                position: null
+            },
+            {
+                id: "ss-white",
+                name: "Standing Stone, White",
+                image: s1,
+                chunkId: null,
+                coords: null,
+                position: null
+            },
+            {
+                id: "as-green",
+                name: "Abandoned Shack, Green",
+                image: p2,
+                chunkId: null,
+                coords: null,
+                position: null
+            },
+            {
+                id: "ss-green",
+                name: "Standing Stone, Green",
+                image: s2,
+                chunkId: null,
+                coords: null,
+                position: null
+            },
+            {
+                id: "as-blue",
+                name: "Abandoned Shack, Blue",
+                image: p3,
+                chunkId: null,
+                coords: null,
+                position: null
+            },
+            {
+                id: "ss-blue",
+                name: "Standing Stone, Blue",
+                image: s3,
+                chunkId: null,
+                coords: null,
+                position: null
+            },
+            {
+                id: "as-black",
+                name: "Abandoned Shack, Black",
+                image: p4,
+                chunkId: null,
+                coords: null,
+                position: null
+            },
+            {
+                id: "ss-black",
+                name: "Standing Stone, Black",
+                image: s4,
+                chunkId: null,
+                coords: null,
+                position: null
+            },
+        ],
         boardSetup: [
             { chunkId: null, rotated: false },
             { chunkId: null, rotated: false },
@@ -61,11 +137,24 @@ export const boardSlice = createSlice({
         },
         updateIsAdvancedMode: (s, a) => {
             s.isAdvancedMode = a.payload
+        },
+        placeStructure: (s, a) => {
+            let { id, chunkId, coords, position } = a.payload
+            let structure = s.structures.find(struct => struct.id === id)
+            structure.chunkId = chunkId
+            structure.coords = { ...coords }
+            structure.position = { ...position }
+        },
+        removeStructure: (s, a) => {
+            let structure = s.structures.find(struct => struct.id === a.payload)
+            structure.chunkId = null
+            structure.coords = null
+            structure.position = null
         }
     }
 })
 
-export const { updatePlayer, slotDraggingChunk, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode } = boardSlice.actions
+export const { updatePlayer, slotDraggingChunk, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure } = boardSlice.actions
 
 export default boardSlice.reducer
 

@@ -54,16 +54,17 @@ export default function SetupPage() {
             <h1>Setup Players</h1>
             <div className="player-setup">
                 { selects }
+                <FormControlLabel
+                    control={<Switch
+                        checked={isAdvancedMode}
+                        onChange={e => {
+                            dispatch(updateIsAdvancedMode(e.target.checked))
+                        }}
+                    />}
+                    label="Advanced Mode"
+                />
             </div>
             
-            <FormControlLabel
-                control={<Switch
-                    checked={isAdvancedMode}
-                    onChange={e => {
-                        dispatch(updateIsAdvancedMode(e.target.checked))
-                    }}
-                />}
-                label="Advanced Mode" />
 
             <BoardSetup />
         </div>
