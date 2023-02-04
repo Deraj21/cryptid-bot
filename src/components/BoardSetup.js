@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux"
 import { useState } from "react"
-import { slotDraggingChunk, updateDraggingChunk } from "../config/boardSlice"
+import { slotDraggingChunk, updateDraggingChunk, finishPlacingChunks, finishPlacingStructures } from "../config/boardSlice"
 import MapChunk from "./MapChunk"
 import Ruler from "./Ruler"
 import Data from '../utils/data'
@@ -12,11 +12,9 @@ export default function BoardSetup() {
         draggingChunk = useSelector(s => s.board.draggingChunk),
         availableChunks = useSelector(s => s.board.availableChunks),
         isAdvancedMode = useSelector(s => s.board.isAdvancedMode),
-        structureData = useSelector(s => s.board.structures)
+        structureData = useSelector(s => s.board.structures),
+        donePlacingChunks = useSelector(s => s.board.donePlacingChunks)
 
-
-    // state
-    const [mapChunksDone, setMapChunksDone] = useState(false)
 
     let draggableNumbers = availableChunks
         .map((n, i) => {
@@ -34,10 +32,14 @@ export default function BoardSetup() {
             )
         })
     
+    let showDoneButton = true
     let structures = structureData
         .map(structure => {
             let { id, name, image, chunkId } = structure
-            let hidden = id.includes("black") ? !isAdvancedMode : chunkId !== null
+            let hidden = id.includes("black") ? (!isAdvancedMode && chunkId !== null) : chunkId !== null
+            if (!hidden){
+                showDoneButton = false
+            }
             return (
                 <div className="structure" key={id}
                     draggable="true"
@@ -59,22 +61,18 @@ export default function BoardSetup() {
             )
         })
 
-    let title = mapChunksDone ? "Place Structures" : "Place Map Chunks"
+    let placementLabel = !donePlacingChunks ? "Place Map Pieces" : "Place Structures"
+    let doneButtonText = !donePlacingChunks ? "Done" : "Done (ready to play game)"
+    showDoneButton = (!donePlacingChunks && availableChunks.length === 0) || (showDoneButton && donePlacingChunks)
 
     return (
         <div className="BoardSetup">
-            <h1>{title}</h1>
-            {/* <Ruler numTicks={21} spaceBetween={25} unit={"px"} hasTallTicks={true} tallTickSpacing={4} marginLeft={"60px"}/> */}
-            <button onClick={() => {
-                if (!mapChunksDone){
-                    setMapChunksDone(true)
-                }
-            }}>{mapChunksDone ? "Done placing Structures" : "Done placing Map Chunks"}</button>
-
-            <div className="board-container">
-
+            <h1>Setup Board</h1>
+            <div className="placement-container">
+                <h3>{placementLabel}</h3>
                 {
-                    mapChunksDone ?
+                    donePlacingChunks
+                    ?
                     <div className="structures-container">
                         { structures }
                     </div>
@@ -83,14 +81,26 @@ export default function BoardSetup() {
                         { draggableNumbers }
                     </div>
                 }
-
-                <div className="chunks-container">
-                    { mapChunks }
-                </div>
-
-
+                {
+                    showDoneButton
+                    ?
+                    <button className="btn"
+                        onClick={() => {
+                            if (donePlacingChunks){
+                                dispatch(finishPlacingStructures())
+                            } else {
+                                dispatch(finishPlacingChunks())
+                            }
+                        }}
+                    >{doneButtonText}</button>
+                    :
+                    ''
+                }
             </div>
 
+            <div className="chunks-container">
+                { mapChunks }
+            </div>
 
         </div>
     )

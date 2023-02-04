@@ -25,15 +25,19 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 ### "setup game" functionality
 - ~~LEFT OFF: dragging from structure bar places on the board~~
 - ~~dragging from structure bar stores structures in the state~~
-- structure bar doesn't appear until all the map chunks are in place
-  - `design session:` should I have a button that says "done placing map chunks", or should the structures just appear when all map chunks are gone?
+- ~~structure bar doesn't appear until all the map chunks are in place~~
+  - ~~`design session:` should I have a button that says "done placing map chunks", or should the structures just appear when all map chunks are gone?~~
+- refactor map chunk images to come from state
 - map chunk bar uses images with big numbers on them
-- add "finished" button at the bottom
+- add "finished" button at the bottom?
 - dragging map chunk should *not* show mask
 - user should not be allowed to place a structure where there already is one
 
 ### "play game" functionality
-- foobar
+- have a design session
+
+### future ideas
+- stuff
 
 ---
 

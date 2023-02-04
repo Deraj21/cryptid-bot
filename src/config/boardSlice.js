@@ -10,6 +10,8 @@ import s2 from "../media/structures/s2.png"
 import s3 from "../media/structures/s3.png"
 import s4 from "../media/structures/s4.png"
 
+
+
 export const boardSlice = createSlice({
     name: 'board',
     initialState: {
@@ -111,7 +113,9 @@ export const boardSlice = createSlice({
         ],
         availableChunks: [ 0, 1, 2, 3, 4, 5 ],
         draggingChunk: null,
-        isAdvancedMode: false
+        isAdvancedMode: false,
+        donePlacingChunks: false,
+        donePlacingStructures: false,
     },
     reducers: {
         updatePlayer: (state, action) => {
@@ -150,11 +154,17 @@ export const boardSlice = createSlice({
             structure.chunkId = null
             structure.coords = null
             structure.position = null
+        },
+        finishPlacingChunks: (s) => {
+            s.donePlacingChunks = true
+        },
+        finishPlacingStructures: (s) => {
+            s.donePlacingStructures = true
         }
     }
 })
 
-export const { updatePlayer, slotDraggingChunk, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure } = boardSlice.actions
+export const { updatePlayer, slotDraggingChunk, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures } = boardSlice.actions
 
 export default boardSlice.reducer
 

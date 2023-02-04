@@ -41,7 +41,7 @@ export default function MapChunk(props) {
     }
 
     structures.map(structure => {
-        if (chunkId && structure.chunkId === chunkId){
+        if (chunkId !== null && structure.chunkId === chunkId){
             let { x, y } = structure.position
             let posX = x - STRUCTURE_WIDTH / 2
             let posY = y - STRUCTURE_HEIGHT / 2

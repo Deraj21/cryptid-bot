@@ -52,9 +52,19 @@ body {
   color: white;
 }
 
+hr {
+  margin: 20px 30px;
+}
+
 h1 {
   font-size: 32px;
   padding: 10px 20px;
+}
+
+h3 {
+  font-size: 20px;
+  font-style: italic;
+  padding: 7px 20px;
 }
 
 .btn {
@@ -67,9 +77,12 @@ h1 {
 .btn:hover {
   background-color: #DBE388;
 }
+.btn:active {
+  filter: brightness(1.2);
+}
 
 .App {
-  height: 100vh;
+  padding-bottom: 50px;
   background-color: #3D6A6D;
   background-image: url("./media/Cryptid_foliage.png");
   background-repeat: no-repeat;
@@ -120,15 +133,15 @@ h1 {
   color: black;
 }
 
-.BoardSetup .board-container {
+.BoardSetup .placement-container {
   display: flex;
-  flex-direction: column;
+  align-items: center;
 }
-.BoardSetup .board-container .numbers-container {
+.BoardSetup .placement-container .numbers-container {
   display: flex;
   min-width: 50px;
 }
-.BoardSetup .board-container .numbers-container .draggable-number {
+.BoardSetup .placement-container .numbers-container .draggable-number {
   font-size: 30px;
   border: 3px solid white;
   border-radius: 50%;
@@ -138,40 +151,40 @@ h1 {
   text-align: center;
   cursor: grab;
 }
-.BoardSetup .board-container .chunks-container {
+.BoardSetup .placement-container .structures-container {
+  display: flex;
+}
+.BoardSetup .placement-container .structures-container .structure {
+  margin: 5px;
+}
+.BoardSetup .chunks-container {
   display: flex;
   flex-wrap: wrap;
   max-width: 930px;
 }
-.BoardSetup .board-container .chunks-container .map-chunk .chunk-image {
+.BoardSetup .chunks-container .map-chunk .chunk-image {
   cursor: grab;
   transform: rotate(0deg);
   height: 160px;
   width: 250px;
 }
-.BoardSetup .board-container .chunks-container .map-chunk .chunk-image:hover {
+.BoardSetup .chunks-container .map-chunk .chunk-image:hover {
   transform: scale(1.02);
   filter: brightness(1.2);
 }
-.BoardSetup .board-container .chunks-container .map-chunk .draggedOver {
+.BoardSetup .chunks-container .map-chunk .draggedOver {
   transform: scale(1.02);
   filter: brightness(1.2);
 }
-.BoardSetup .board-container .chunks-container .map-chunk .chunk-image-placeholder {
+.BoardSetup .chunks-container .map-chunk .chunk-image-placeholder {
   height: 160px;
   width: 250px;
   cursor: pointer;
 }
-.BoardSetup .board-container .chunks-container .map-chunk .chunk-image.rotated {
+.BoardSetup .chunks-container .map-chunk .chunk-image.rotated {
   transition-delay: 0.1s;
   transition-duration: 0.3s;
   transform: rotate(180deg);
-}
-.BoardSetup .board-container .structures-container {
-  display: flex;
-}
-.BoardSetup .board-container .structures-container .structure {
-  margin: 5px;
 }
 
 /*# sourceMappingURL=App.css.map */
