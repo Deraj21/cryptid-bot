@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux"
 import { useState } from "react"
-import { slotDraggingChunk, updateDraggingChunk, finishPlacingChunks, finishPlacingStructures } from "../config/boardSlice"
+import { slotDraggingChunk, updateDraggingChunk, finishPlacingChunks, finishPlacingStructures, setDraggingStructure } from "../config/boardSlice"
 import MapChunk from "./MapChunk"
 import Ruler from "./Ruler"
 import Data from '../utils/data'
@@ -8,62 +8,71 @@ import Data from '../utils/data'
 export default function BoardSetup() {
     // ducks
     const dispatch = useDispatch()
-    const boardSetup = useSelector(s => s.board.boardSetup),
-        draggingChunk = useSelector(s => s.board.draggingChunk),
-        availableChunks = useSelector(s => s.board.availableChunks),
-        isAdvancedMode = useSelector(s => s.board.isAdvancedMode),
-        structureData = useSelector(s => s.board.structures),
+    const isAdvancedMode = useSelector(s => s.board.isAdvancedMode),
+        structures = useSelector(s => s.board.structures),
         donePlacingChunks = useSelector(s => s.board.donePlacingChunks)
+    let mapChunks = useSelector(s => s.board.mapChunks)
 
-
-    let draggableNumbers = availableChunks
-        .map((n, i) => {
+    let unplacedMapPieces = mapChunks
+        .filter(chunk => chunk.placed === null)
+        .map((piece, i) => {
             return (
                 <div key={`key${i}`}
                     draggable="true"
-                    className="draggable-number"
+                    className="unplaced-map-piece"
                     onDragStart={ e => {
-                        dispatch(updateDraggingChunk(n))
-                        e.dataTransfer.setData("text/plain", "")
+                        dispatch(updateDraggingChunk(piece.id))
                     }}
                 >
-                    <p>{n + 1}</p>
+                    <img src={piece.image} alt="map-piece-to-place" />
+                    <p>{piece.id + 1}</p>
                 </div>
             )
         })
+    let placedMapPieces = [0, 1, 2, 3, 4, 5]
+        .map(index => {
+            let chunk = mapChunks.find(c => c.placed === index) || {}
+            return <MapChunk key={index} index={index}
+                chunkId={chunk.id !== undefined ? chunk.id : null}
+                rotated={chunk.rotated || false }
+                placed={chunk.placed || null}
+                image={chunk.image || null}
+            />
+        })
     
-    let showDoneButton = true
-    let structures = structureData
+        let unplacedStructures = structures
+        .filter(struct => {
+            if (struct.chunkId !== null)
+            return false
+            else if (struct.id.includes("black") && !isAdvancedMode)
+                return false
+            else
+                return true
+        })
         .map(structure => {
             let { id, name, image, chunkId } = structure
-            let hidden = id.includes("black") ? (!isAdvancedMode && chunkId !== null) : chunkId !== null
-            if (!hidden){
-                showDoneButton = false
-            }
             return (
                 <div className="structure" key={id}
                     draggable="true"
-                    hidden={hidden}
                     onDragStart={(e) => {
-                        e.dataTransfer.setData("text/plain", id)
+                        dispatch(setDraggingStructure(id))
                     }}
-                >
+                    >
                     {/* <p>{name}</p> */}
                     <img alt={name} src={image}/>
                 </div>
             )
         })
-
-    let mapChunks = boardSetup
-        .map((chunk, index) => {
-            return (
-                <MapChunk key={index} chunkId={chunk.chunkId} index={index} rotated={chunk.rotated} />
-            )
-        })
+        
+    let showDoneButton
+    if (!donePlacingChunks){
+        showDoneButton = unplacedMapPieces.length === 0
+    } else {
+        showDoneButton = unplacedStructures.length === 0
+    }
 
     let placementLabel = !donePlacingChunks ? "Place Map Pieces" : "Place Structures"
     let doneButtonText = !donePlacingChunks ? "Done" : "Done (ready to play game)"
-    showDoneButton = (!donePlacingChunks && availableChunks.length === 0) || (showDoneButton && donePlacingChunks)
 
     return (
         <div className="BoardSetup">
@@ -74,11 +83,11 @@ export default function BoardSetup() {
                     donePlacingChunks
                     ?
                     <div className="structures-container">
-                        { structures }
+                        { unplacedStructures }
                     </div>
                     :
-                    <div className="numbers-container">
-                        { draggableNumbers }
+                    <div className="unplaced-map-pieces-container">
+                        { unplacedMapPieces }
                     </div>
                 }
                 {
@@ -99,7 +108,7 @@ export default function BoardSetup() {
             </div>
 
             <div className="chunks-container">
-                { mapChunks }
+                { placedMapPieces }
             </div>
 
         </div>

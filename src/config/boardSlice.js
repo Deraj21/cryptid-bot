@@ -10,7 +10,13 @@ import s2 from "../media/structures/s2.png"
 import s3 from "../media/structures/s3.png"
 import s4 from "../media/structures/s4.png"
 
-
+import chunk_image_0 from "../media/board-chunks/0.png"
+import chunk_image_1 from "../media/board-chunks/1.png"
+import chunk_image_2 from "../media/board-chunks/2.png"
+import chunk_image_3 from "../media/board-chunks/3.png"
+import chunk_image_4 from "../media/board-chunks/4.png"
+import chunk_image_5 from "../media/board-chunks/5.png"
+let chunkImages = [ chunk_image_0, chunk_image_1, chunk_image_2, chunk_image_3, chunk_image_4, chunk_image_5 ]
 
 export const boardSlice = createSlice({
     name: 'board',
@@ -103,17 +109,48 @@ export const boardSlice = createSlice({
                 position: null
             },
         ],
-        boardSetup: [
-            { chunkId: null, rotated: false },
-            { chunkId: null, rotated: false },
-            { chunkId: null, rotated: false },
-            { chunkId: null, rotated: false },
-            { chunkId: null, rotated: false },
-            { chunkId: null, rotated: false },
+        mapChunks: [
+            {
+                id: 0,
+                placed: null,
+                rotated: false,
+                image: chunkImages[0]
+            },
+            {
+                id: 1,
+                placed: null,
+                rotated: false,
+                image: chunkImages[1]
+            },
+            {
+                id: 2,
+                placed: null,
+                rotated: false,
+                image: chunkImages[2]
+            },
+            {
+                id: 3,
+                placed: null,
+                rotated: false,
+                image: chunkImages[3]
+            },
+            {
+                id: 4,
+                placed: null,
+                rotated: false,
+                image: chunkImages[4]
+            },
+            {
+                id: 5,
+                placed: null,
+                rotated: false,
+                image: chunkImages[5]
+            }
         ],
-        availableChunks: [ 0, 1, 2, 3, 4, 5 ],
         draggingChunk: null,
+        fromChunk: null,
         isAdvancedMode: false,
+        draggingStructure: null,
         donePlacingChunks: false,
         donePlacingStructures: false,
     },
@@ -121,20 +158,16 @@ export const boardSlice = createSlice({
         updatePlayer: (state, action) => {
             state.players[action.payload.key].type = action.payload.type
         },
-        slotDraggingChunk: (state, action) => {
-            state.boardSetup[action.payload].chunkId = state.draggingChunk
-            let i = state.availableChunks.findIndex(v => v === state.draggingChunk)
-            if (i !== -1) {
-                state.availableChunks.splice(i, 1)
-            }
-            state.draggingChunk = null
+        slotDraggingChunk: (s, a) => {
+            s.mapChunks[s.draggingChunk].placed = a.payload
+            s.draggingChunk = null
         },
         removeChunk: (state, action) => {
-            state.boardSetup[action.payload].chunkId = null
+            state.mapChunks.find(mapChunk => action.payload === mapChunk.placed).placed = null
         },
-        rotateChunk: (state, action) => {
-            let i = state.boardSetup.findIndex(val => val.chunkId === action.payload)
-            state.boardSetup[i].rotated = !state.boardSetup[i].rotated
+        rotateChunk: (s, a) => {
+            let chunk = s.mapChunks.find(chunk => chunk.id === a.payload)
+            chunk.rotated = !chunk.rotated
         },
         updateDraggingChunk: (state, action) => {
             state.draggingChunk = action.payload
@@ -142,12 +175,16 @@ export const boardSlice = createSlice({
         updateIsAdvancedMode: (s, a) => {
             s.isAdvancedMode = a.payload
         },
+        setDraggingStructure: (s, a) => {
+            s.draggingStructure = a.payload
+        },
         placeStructure: (s, a) => {
             let { id, chunkId, coords, position } = a.payload
             let structure = s.structures.find(struct => struct.id === id)
             structure.chunkId = chunkId
             structure.coords = { ...coords }
             structure.position = { ...position }
+            s.draggingStructure = null
         },
         removeStructure: (s, a) => {
             let structure = s.structures.find(struct => struct.id === a.payload)
@@ -164,7 +201,7 @@ export const boardSlice = createSlice({
     }
 })
 
-export const { updatePlayer, slotDraggingChunk, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures } = boardSlice.actions
+export const { updatePlayer, slotDraggingChunk, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure } = boardSlice.actions
 
 export default boardSlice.reducer
 

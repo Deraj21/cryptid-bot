@@ -22,22 +22,16 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 
 ## Todo
 
+
 ### "setup game" functionality
-- ~~LEFT OFF: dragging from structure bar places on the board~~
-- ~~dragging from structure bar stores structures in the state~~
-- ~~structure bar doesn't appear until all the map chunks are in place~~
-  - ~~`design session:` should I have a button that says "done placing map chunks", or should the structures just appear when all map chunks are gone?~~
-- refactor map chunk images to come from state
-- map chunk bar uses images with big numbers on them
-- add "finished" button at the bottom?
-- dragging map chunk should *not* show mask
-- user should not be allowed to place a structure where there already is one
+- test (later)
 
 ### "play game" functionality
 - have a design session
 
 ### future ideas
-- stuff
+- reset chunk placement button (prevents user from having to reload page and start from scratch)
+- map chunks can be swapped
 
 ---
 
@@ -47,7 +41,9 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 - would be nice if board chunks retained their rotation state when being moved
 - there's some crazy animation stuff going on when rotating, and dragging-dropping
   - maybe set all css animation settings to 0s and then start experimenting from there
-- 
+- should not be able to place multiple structures on one hex
+
+
 
 
 

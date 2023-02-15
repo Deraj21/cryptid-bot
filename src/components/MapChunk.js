@@ -2,19 +2,12 @@ import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { slotDraggingChunk, updateDraggingChunk, removeChunk, rotateChunk, placeStructure } from "../config/boardSlice"
 
-import chunk_image_0 from "../media/board-chunks/0.png"
-import chunk_image_1 from "../media/board-chunks/1.png"
-import chunk_image_2 from "../media/board-chunks/2.png"
-import chunk_image_3 from "../media/board-chunks/3.png"
-import chunk_image_4 from "../media/board-chunks/4.png"
-import chunk_image_5 from "../media/board-chunks/5.png"
 import placeholderChunk from "../media/board-chunks/placeholder.png"
 
 import p1 from "../media/structures/p1.png"
 import mask from '../media/mask.png'
 import redDot from '../media/red-dot.png'
 
-const chunkImages = [ chunk_image_0, chunk_image_1, chunk_image_2, chunk_image_3, chunk_image_4, chunk_image_5 ]
 const MASK_WIDTH = 54
 const MASK_HEIGHT = 48
 const STRUCTURE_WIDTH = 24
@@ -25,6 +18,8 @@ export default function MapChunk(props) {
     const dispatch = useDispatch()
     const draggingChunk = useSelector(s => s.board.draggingChunk)
     const structures = useSelector(s => s.board.structures)
+    const draggingStructure = useSelector(s => s.board.draggingStructure)
+    const donePlacingChunks = useSelector(s => s.board.donePlacingChunks)
 
     // local state
     const [droppable, setDroppable] = useState(true)
@@ -32,7 +27,7 @@ export default function MapChunk(props) {
     const [maskCoords, setMaskCoords] = useState({row: null, col: null})
 
     // props
-    const { chunkId, index, rotated } = props
+    const { chunkId, index, rotated, image } = props
     
     // create background image
     let background = ''
@@ -49,7 +44,7 @@ export default function MapChunk(props) {
         }
     })
 
-    background += `no-repeat url(${chunkImages[chunkId]})`
+    background += `no-repeat url(${image})`
 
     return (
         <div className="map-chunk"
@@ -58,6 +53,8 @@ export default function MapChunk(props) {
 
             onDragOver={e => {
                 e.preventDefault()
+                if (!donePlacingChunks)
+                    return
                 let x = e.nativeEvent.offsetX
                 let y = e.nativeEvent.offsetY
                 let H = 160 // e.target.height
@@ -83,11 +80,12 @@ export default function MapChunk(props) {
             }}
             onDragStart={ e => {
                 dispatch(updateDraggingChunk(chunkId))
-                e.dataTransfer.setData("text/plain", index)
                 setDroppable(true)
             }}
             onDragEnter={e => {
                 e.preventDefault()
+                if (chunkId !== null && !donePlacingChunks)
+                    return
                 e.target.classList.add("draggedOver")
             }}
             onDragLeave={e => {
@@ -96,18 +94,14 @@ export default function MapChunk(props) {
                 setMaskCoords({row: null, col: null})
             }}
             onDrop={e => {
-                // TODO: sus out if structure or map chunk
-                let dataTransfer = e.dataTransfer.getData("text/plain")
-
-                if (draggingChunk !== null && droppable) {
+                // if dragging map chunk
+                if (!donePlacingChunks && droppable && draggingChunk !== null) {
                     dispatch(slotDraggingChunk(index))
                     setDroppable(false)
-                    if (dataTransfer !== "" && dataTransfer !== index) {
-                        dispatch(removeChunk(dataTransfer))
-                    }
-                } else if (!droppable && dataTransfer !== '') {
+                // if dragging structure
+                } else if (draggingStructure !== null) {
                     dispatch(placeStructure({
-                        id: dataTransfer,
+                        id: draggingStructure,
                         chunkId: chunkId,
                         position: maskPosition,
                         coords: maskCoords
@@ -119,7 +113,6 @@ export default function MapChunk(props) {
             }}
             onClick={e => {
                 e.target.classList.toggle("rotated")
-                // BUG: weird rotation behavior
                 dispatch(rotateChunk(chunkId))
             }}
         >
