@@ -3,14 +3,24 @@
 ## Basic Idea
 My wife and I enjoy the board game “Cryptid,” but it can only be played with 3 or more people. There is a variant that allows for 2 people, but it’s actually just a 4 player game, and each player gets 2 clues and 2 colors of tokens. I want to fix this by creating a “robot” (an app) that will act as the 3rd person.
 
-### How to pull it off
+### Requirements
 - The app displays the board and structures for the particular game setup
-- During their turn, players can “ask” the bot about a hex, and if according to their clue, can the Cryptid reside there
-  - The bot replies with a yes or no (placing a cylinder or a cube respectively)
+- **Player's Turn**
+  - Players can “ask” the bot about a hex, specifically: "According to its clue, can the Cryptid reside here?"
+    - The bot replies with a yes or no (placing a cylinder or a cube respectively)
+  - Players place their own cubes and cylinders when asked questions or when a player they ask responds with a cube; this is so that the bot is kept up-to-date on where it can place pieces.
 - A player can also search a spot to see if the cryptid is there
-- When it’s the robot’s turn, they randomly select a player, and randomly select a hex that doesn’t already have a cube on it. The player answers yes or no.
-  - If no, the bot will play a cube somewhere randomly on the board where the cryptid cannot be, according to their clue
-- The bot will never initiate a search
+- When it’s the bot’s turn, a players take turns taking the role of the bot, asking or searching.
+
+### How to pull it off
+- board data is collected by the `setup screen`
+  - where the board pieces go, and are they rotated?
+  - are we in advanced mode?
+  - where are the structures placed?
+  - which colors are playing?
+  - which colors are bots, and which are people?
+- the `play screen` uses canvas to display the board, and structures
+- once the player starts the game, a new 
 
 ---
 
@@ -21,17 +31,44 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 ---
 
 ## Todo
-
-
-### "setup game" functionality
-- test (later)
-
 ### "play game" functionality
-- have a design session
+- ~~have a design session~~
+- research using react and html5 canvas in conjunction
+  - how will re-rendering work?
+  - is there a canvas + react library?
+- try to get map data from that one cryptid board setup site
+- convert setup data to board data
+  - "grid" of hexes
+    ```js
+    const exampleHex = {
+        position: { row: 2, col: 0 },
+        terrainType: "water",
+        structure: { color: "white", type: "as" },
+        animalTerritory: "bear",
+        noMarker: "orange",
+        yesMarkers: [ "lightblue", "red" ]
+    }
+    ```
+- using Canvas, display:
+  - board pieces
+  - structures
+- make no/yes markers in some art program
+- display
+  - no markers
+  - yes markers
+- add custom menu on click
+
+### other
+- test, test, test
 
 ### future ideas
 - reset chunk placement button (prevents user from having to reload page and start from scratch)
 - map chunks can be swapped
+- bot can take its own turn (randomly selects a player and a hex and asks)
+  - (way down the line) bot acts like a player, and decides who to ask where based on what information it still needs
+- map solver visualization tool
+  - map can highlight areas of the map based on inputted clues, to see the overlap
+  - ex: all hexes 3 from blue structure colored in blue, hexes within 1 of forest highlighted in red, and the overlapping purple hexes are the possibilities
 
 ---
 
