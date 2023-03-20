@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import dataHelper from "../utils/data"
+
 // structure images
 import p1 from "../media/structures/p1.png"
 import p2 from "../media/structures/p2.png"
@@ -153,6 +155,7 @@ export const boardSlice = createSlice({
         draggingStructure: null,
         donePlacingChunks: false,
         donePlacingStructures: false,
+        hexes: null
     },
     reducers: {
         updatePlayer: (state, action) => {
@@ -197,11 +200,20 @@ export const boardSlice = createSlice({
         },
         finishPlacingStructures: (s) => {
             s.donePlacingStructures = true
+        },
+        setHexData: (s, a) => {
+            s.hexes = a.payload
+        },
+        placeYes: (s, a) => {
+            
+        },
+        placeNo: (s, a) => {
+
         }
     }
 })
 
-export const { updatePlayer, slotDraggingChunk, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure } = boardSlice.actions
+export const { updatePlayer, slotDraggingChunk, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, placeYes, placeNo } = boardSlice.actions
 
 export default boardSlice.reducer
 

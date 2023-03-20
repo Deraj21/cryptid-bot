@@ -1,8 +1,11 @@
+import PlayingBoard from "../components/PlayingBoard";
+
 export default function PlayPage() {
 
     return (
         <div className="PlayPage" >
-            Play Page
+            <h1>Play</h1>
+            <PlayingBoard />
         </div>
     )
 }

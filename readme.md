@@ -32,23 +32,10 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 
 ## Todo
 ### "play game" functionality
-- ~~have a design session~~
-- research using react and html5 canvas in conjunction
-  - how will re-rendering work?
-  - is there a canvas + react library?
-- try to get map data from that one cryptid board setup site
-- convert setup data to board data
-  - "grid" of hexes
-    ```js
-    const exampleHex = {
-        position: { row: 2, col: 0 },
-        terrainType: "water",
-        structure: { color: "white", type: "as" },
-        animalTerritory: "bear",
-        noMarker: "orange",
-        yesMarkers: [ "lightblue", "red" ]
-    }
-    ```
+- ~~have a (couple few) design session(s)~~
+- ~~try to get map data from that one cryptid board setup site~~
+- ~~`LEFT OFF:` convert setup data to board data~~
+  - ~~"grid" of hexes~~
 - using Canvas, display:
   - board pieces
   - structures

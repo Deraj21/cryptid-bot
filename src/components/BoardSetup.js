@@ -1,17 +1,35 @@
-import { useSelector, useDispatch } from "react-redux"
 import { useState } from "react"
-import { slotDraggingChunk, updateDraggingChunk, finishPlacingChunks, finishPlacingStructures, setDraggingStructure } from "../config/boardSlice"
+import { useSelector, useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+
+import { slotDraggingChunk, updateDraggingChunk, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData } from "../config/boardSlice"
 import MapChunk from "./MapChunk"
 import Ruler from "./Ruler"
-import Data from '../utils/data'
+import dataHelper from "../utils/data"
 
 export default function BoardSetup() {
-    // ducks
+    // redux
     const dispatch = useDispatch()
     const isAdvancedMode = useSelector(s => s.board.isAdvancedMode),
         structures = useSelector(s => s.board.structures),
         donePlacingChunks = useSelector(s => s.board.donePlacingChunks)
     let mapChunks = useSelector(s => s.board.mapChunks)
+
+    let hexes = useSelector(s => s.board.hexes)
+
+    if (hexes && hexes.length){
+        
+        let text = hexes.map(row => {
+            return row.map(hex => {
+                return hex.terrainType[0]
+            }).join(' ')
+        }).join('\n')
+
+        console.log(text)
+    }
+
+    // react-router
+    let navigate = useNavigate()
 
     let unplacedMapPieces = mapChunks
         .filter(chunk => chunk.placed === null)
@@ -97,6 +115,15 @@ export default function BoardSetup() {
                         onClick={() => {
                             if (donePlacingChunks){
                                 dispatch(finishPlacingStructures())
+
+                                // convert to play data
+                                let chunksCopy = [ ...mapChunks ]
+                                let structuresCopy = [ ...structures ]
+
+                                let hexes = dataHelper.convertSetupToPlay(chunksCopy, structuresCopy)
+                                
+                                dispatch(setHexData(hexes))
+                                navigate("/play")
                             } else {
                                 dispatch(finishPlacingChunks())
                             }
