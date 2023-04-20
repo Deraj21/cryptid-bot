@@ -1,4 +1,5 @@
 # Cryptid Bot
+-- making small change to check permissions --
 
 ## Basic Idea
 My wife and I enjoy the board game “Cryptid,” but it can only be played with 3 or more people. There is a variant that allows for 2 people, but it’s actually just a 4 player game, and each player gets 2 clues and 2 colors of tokens. I want to fix this by creating a “robot” (an app) that will act as the 3rd person.
