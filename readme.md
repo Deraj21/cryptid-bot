@@ -32,10 +32,6 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 
 ## Todo
 ### "play game" functionality
-- ~~have a (couple few) design session(s)~~
-- ~~try to get map data from that one cryptid board setup site~~
-- ~~`LEFT OFF:` convert setup data to board data~~
-  - ~~"grid" of hexes~~
 - using Canvas, display:
   - board pieces
   - structures
