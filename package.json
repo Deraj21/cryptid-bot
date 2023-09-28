@@ -20,6 +20,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "stylin": "sass --watch src/styles/App.sass src/App.css",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
