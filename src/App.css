@@ -67,6 +67,10 @@ h3 {
   padding: 7px 20px;
 }
 
+canvas {
+  background-color: white;
+}
+
 .btn {
   margin: 10px;
   padding: 10px;
@@ -196,6 +200,13 @@ h3 {
   transition-delay: 0.1s;
   transition-duration: 0.3s;
   transform: rotate(180deg);
+}
+
+.PlayingBoard {
+  margin: 20px 20px;
+}
+.PlayingBoard canvas {
+  padding: 3px;
 }
 
 /*# sourceMappingURL=App.css.map */
