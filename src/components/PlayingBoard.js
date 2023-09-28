@@ -1,4 +1,4 @@
-import React, { useEffect, useState, userRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import CanvasBoardHelper from "../utils/CanvasBoardHelper";
 
@@ -28,8 +28,6 @@ export default function PlayingBoard() {
     // listen for when a user right-clicks
         // create menu (use material ui)
         // on click of menu item -> update board data & redraw board
-
-    }, [hexes, mapPeices])
 
     return (
         <div className="PlayingBoard">

@@ -27,7 +27,6 @@ export default class CanvasBoardHelper {
         // draw board peices
         peices.sort((a, b) => a.placed - b.placed)
             .forEach((peice, i) => {
-                console.log(i, i % 2, Math.floor(i / 2))
                 let dx = (i % 2) * 236
                 let dy = Math.floor(i / 2) * 138
                 ctx.drawImage(makeImg(peice.image), dx, dy)
