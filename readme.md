@@ -19,7 +19,7 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
   - where are the structures placed?
   - which colors are playing?
   - which colors are bots, and which are people?
-- the `play screen` uses canvas to display the board, and structures
+- the `play screen` uses html5 canvas to display the board and structures
 - once the player starts the game, a new 
 
 ---
@@ -32,18 +32,13 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 
 ## Todo
 ### "play game" functionality
-- ~~have a (couple few) design session(s)~~
-- ~~try to get map data from that one cryptid board setup site~~
-- ~~`LEFT OFF:` convert setup data to board data~~
-  - ~~"grid" of hexes~~
-- using Canvas, display:
-  - ~~board pieces~~
-  - structures
+- display board pieces rotation
+- display structures
+- add custom menu on click
 - make no/yes markers in some art program
 - display
   - no markers
   - yes markers
-- add custom menu on click
 
 ### other
 - test, test, test

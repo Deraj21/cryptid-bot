@@ -69,6 +69,7 @@ h3 {
 
 canvas {
   background-color: white;
+  border-radius: 3px;
 }
 
 .btn {
