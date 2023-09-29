@@ -6,10 +6,10 @@ const canvasId = "cryptid-board-canvas"
 
 export default function PlayingBoard() {
 
-    const mapPeices = useSelector(s => s.board.mapChunks)
     let hexes = useSelector(s => s.board.hexes)
     let peices = useSelector(s => s.board.mapChunks)
-    let canvasHelper
+    const [canvasHelper, setCanvasHelper] = useState(null)
+    const [redrawTrigger, redraw] = useState(false)
 
     const h = 600
     const w = 600
@@ -19,11 +19,16 @@ export default function PlayingBoard() {
     useEffect(() => {
         let canvas = canvasRef.current
         // create board helper
-        canvasHelper = new CanvasBoardHelper(canvas)
+        if (!canvasHelper){
+            setCanvasHelper( new CanvasBoardHelper(canvas) )
+        } else {
+            // draw the board initially
+            canvasHelper.draw([ ...peices ], [ ...hexes ])
+        }
 
-        // draw the board initially
-        canvasHelper.draw([ ...peices ], [ ...hexes ])
-    })
+        if (redraw)
+            redraw(false)
+    }, [canvasHelper, hexes, peices, redrawTrigger])
 
     // listen for when a user right-clicks
         // create menu (use material ui)
@@ -34,6 +39,9 @@ export default function PlayingBoard() {
             <canvas ref={canvasRef} id={canvasId}  height={h} width={w} >
                 Oops. It seems that the canvas broke.
             </canvas>
+            <button
+                onClick={() => redraw(true)}
+            >Redraw</button>
         </div>
     )
 }

@@ -31,7 +31,7 @@ export default {
         let numCols = 6
         let numRows = 3
         
-        // // loop through each map chunk
+        // loop through each map chunk
         chunks.forEach(chunk => {
             let { rotated, id, placed } = chunk
             let dc = placed%2 * numCols
@@ -44,7 +44,7 @@ export default {
                     col: rotated ? numCols - 1 - col : col
                 }
                 let hex = hexes[dr + row][dc + col]
-                hex.position = {row: dr + row, col: dc + col}
+                hex.coords = {row: dr + row, col: dc + col}
                 
                 // use position to get the terrain type and animal territory
                 let data = cryptidMapData.find(d => {
@@ -62,8 +62,10 @@ export default {
                 structs.forEach(struct => {
                     if (id === struct.chunkId && row === struct.coords.row && col === struct.coords.col) {
                         // set structure for hex
-                        hex.stuctureType = struct.id.split("-")[0]
+                        // console.log();
+                        hex.structureType = struct.id.split("-")[0]
                         hex.structureColor = struct.id.split("-")[1]
+                        hex.position = { ...struct.position }
                     }
                 })
             }

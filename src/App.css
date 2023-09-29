@@ -68,8 +68,13 @@ h3 {
 }
 
 canvas {
-  background-color: rgba(255, 255, 255, 0.2745098039);
+  background-color: #ffffff;
   border-radius: 3px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .btn {

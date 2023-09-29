@@ -1,20 +1,20 @@
 const points = {
     ship: [
-        { x:  4, y:  0 },
-        { x: -4, y:  3 },
-        { x: -2, y:  0 },
+        { x: 4, y: 0 },
+        { x: -4, y: 3 },
+        { x: -2, y: 0 },
         { x: -4, y: -3 }
     ],
     shipFlame: [
-        { x: -2, y:   0 },
+        { x: -2, y: 0 },
         { x: -5, y: 1.5 },
-        { x: -4, y:  .5 },
-        { x: -5, y:   0 },
+        { x: -4, y: .5 },
+        { x: -5, y: 0 },
         { x: -4, y: -.5 },
         { x: -5, y: -1.5 }
     ]
 }
-  
+
 const Draw = {
     /**
      * @param {Object} pos - position
@@ -22,8 +22,8 @@ const Draw = {
      * @param {number} pos.y - y position
      * @param {number} rot - rotation in radians
      */
-    transform: function(pos, rot = 0){
-        let {x, y} = pos
+    transform: function (pos, rot = 0) {
+        let { x, y } = pos
         ctx.save()
         ctx.translate(x, y)
         ctx.rotate(rot)
@@ -32,14 +32,14 @@ const Draw = {
      * @param {Object[]} points - points of polygon
      * @param {string} color - ctx.strokeStyle
      */
-    drawPoly: function(points, color){
+    drawPoly: function (points, color) {
         ctx.beginPath()
         points.forEach((p, i) => {
-        if (i === 0) {
-            ctx.moveTo(p.x, p.y)
-        } else {
-            ctx.lineTo(p.x, p.y)
-        }
+            if (i === 0) {
+                ctx.moveTo(p.x, p.y)
+            } else {
+                ctx.lineTo(p.x, p.y)
+            }
         })
         ctx.closePath()
         if (color) {
@@ -59,22 +59,22 @@ const Draw = {
      * @param {string} flameColor
      * @param {number} radius - size of the hitbox (for debugging)
      */
-    drawShip(pos, rot, scale, color, drawFlame = false, flameColor = "", radius = null){
+    drawShip(pos, rot, scale, color, drawFlame = false, flameColor = "", radius = null) {
         // transform
         Draw.transform(pos, rot)
         Draw.drawPoly(
-        points.ship.map(p => { return { x: p.x * scale, y: p.y * scale} }),
-        color
+            points.ship.map(p => { return { x: p.x * scale, y: p.y * scale } }),
+            color
         )
-        if (drawFlame){
-        Draw.drawPoly(
-            points.shipFlame.map(p => { return { x: p.x * scale, y: p.y * scale} }),
-            flameColor
-        )
+        if (drawFlame) {
+            Draw.drawPoly(
+                points.shipFlame.map(p => { return { x: p.x * scale, y: p.y * scale } }),
+                flameColor
+            )
         }
         ctx.restore()
     },
-    drawShield: function(pos, rot = 0, scale, color = ""){
+    drawShield: function (pos, rot = 0, scale, color = "") {
         Draw.transform(pos, rot)
         if (color) ctx.strokeStyle = color
 
@@ -100,8 +100,8 @@ const Draw = {
      * @param {string} flameColor
      * @param {number} radius - size of the hitbox (for debugging)
      */
-    drawRock: function(pos, rot, scale, color, radius = null){
-        
+    drawRock: function (pos, rot, scale, color, radius = null) {
+
     },
     /**
      * @param {string} text
@@ -113,46 +113,46 @@ const Draw = {
      * @param {string} vAlign "bottom", "top", "center"
      * @param {boolean} boxed puts box around letters
      */
-    drawText: function(text, x, y, fill = "black", stroke = "", hAlign = "left", vAlign = "bottom", boxed = false){
+    drawText: function (text, x, y, fill = "black", stroke = "", hAlign = "left", vAlign = "bottom", boxed = false) {
         const h = FONT.size * .6
         const w = FONT.size * .6 * text.length
 
         // adjust for vertical alignment
-        switch(hAlign){
-        case 'center':
-            x -= w / 2
-            break;
-        case 'right':
-            x -= w
-            break;
-        case 'left':
-        default:
-            break;
+        switch (hAlign) {
+            case 'center':
+                x -= w / 2
+                break;
+            case 'right':
+                x -= w
+                break;
+            case 'left':
+            default:
+                break;
         }
-        
+
         // adjust for horizontal alignment
-        switch(vAlign){
-        case 'center':
-            y += h / 2
-            break;
-        case 'top':
-            y += h
-            break;
-        case 'bottom':
-        default:
-            break;
+        switch (vAlign) {
+            case 'center':
+                y += h / 2
+                break;
+            case 'top':
+                y += h
+                break;
+            case 'bottom':
+            default:
+                break;
         }
 
         ctx.fillStyle = fill
         ctx.fillText(text, x, y)
         if (stroke) {
-        ctx.strokeStyle = stroke
-        ctx.strokeText(text, x, y)
+            ctx.strokeStyle = stroke
+            ctx.strokeText(text, x, y)
         }
 
         // boxed
-        if (boxed){
-        ctx.strokeRect(x, y - FONT.size * .6, FONT.size * .6 * text.length, FONT.size * .6)
+        if (boxed) {
+            ctx.strokeRect(x, y - FONT.size * .6, FONT.size * .6 * text.length, FONT.size * .6)
         }
     },
     /**
@@ -160,23 +160,23 @@ const Draw = {
      * @param {number} scale - 'size' of the ships
      * @param {string} color - ctx.strokeStyle
      */
-    drawLives: function(lives, scale, color){
+    drawLives: function (lives, scale, color) {
         let xOffset = 20
         let yOffset = 20
         let spacing = 20
 
-        for (let i = 0; i < lives; i++){
-        Draw.drawShip(
-            { x: i * spacing + xOffset, y: yOffset},
-            Math.PI * 3/2, scale, color
-        )
+        for (let i = 0; i < lives; i++) {
+            Draw.drawShip(
+                { x: i * spacing + xOffset, y: yOffset },
+                Math.PI * 3 / 2, scale, color
+            )
         }
     }
 }
-  
-  
+
+
 
 export default {
-    
+
 }
 

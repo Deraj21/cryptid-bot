@@ -32,7 +32,7 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 
 ## Todo
 ### "play game" functionality
-- display board pieces rotation
+- ~~display board pieces' rotation~~
 - display structures
 - add custom menu on click
 - make no/yes markers in some art program

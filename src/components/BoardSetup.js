@@ -17,16 +17,16 @@ export default function BoardSetup() {
 
     let hexes = useSelector(s => s.board.hexes)
 
-    if (hexes && hexes.length){
+    // if (hexes && hexes.length){
         
-        let text = hexes.map(row => {
-            return row.map(hex => {
-                return hex.terrainType[0]
-            }).join(' ')
-        }).join('\n')
+    //     let text = hexes.map(row => {
+    //         return row.map(hex => {
+    //             return hex.terrainType[0]
+    //         }).join(' ')
+    //     }).join('\n')
 
-        console.log(text)
-    }
+    //     console.log(text)
+    // }
 
     // react-router
     let navigate = useNavigate()
@@ -58,7 +58,7 @@ export default function BoardSetup() {
             />
         })
     
-        let unplacedStructures = structures
+    let unplacedStructures = structures
         .filter(struct => {
             if (struct.chunkId !== null)
             return false
