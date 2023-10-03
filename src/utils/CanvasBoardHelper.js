@@ -1,4 +1,7 @@
 import media from '../utils/media.js'
+import dataHelper from "../utils/data.js"
+
+const { CHUNK_WIDTH, CHUNK_HEIGHT, MASK_WIDTH, MASK_HEIGHT, STRUCTURE_WIDTH, STRUCTURE_HEIGHT, CHUNK_FIT_X, CHUNK_FIT_Y, } = dataHelper
 
 function makeImg(src) {
     let i = new Image()
@@ -43,8 +46,8 @@ export default class CanvasBoardHelper {
         peices.sort((a, b) => a.placed - b.placed)
             .forEach((peice, i) => {
 
-                let dx = (i % 2) * 236
-                let dy = Math.floor(i / 2) * 138
+                let dx = (i % 2) * (CHUNK_WIDTH + CHUNK_FIT_X)
+                let dy = Math.floor(i / 2) * (CHUNK_HEIGHT + CHUNK_FIT_Y)
                 let imgObject = makeImg(peice.image)
                 let w = imgObject.width / 2
                 let h = imgObject.height / 2
@@ -57,7 +60,7 @@ export default class CanvasBoardHelper {
         let done = false
         hexes.forEach((row, ri) => {
             row.forEach((hex, i) => {
-                let { structureColor, structureType, yesMarkers, noMarker, position } = hex
+                let { structureColor, structureType, yesMarkers, noMarker, position, chunkCoords } = hex
                 
                 // let dx = position.row * 
                 // let dy 
@@ -65,13 +68,16 @@ export default class CanvasBoardHelper {
                 // TODO: display structures
                 if (structureColor){
                     
+                    console.log(hex);
+
                     let imgObject = makeImg(media.structures[`${structureType}-${structureColor}`])
                     let w = imgObject.width / 2
                     let h = imgObject.height / 2
-                    
-                    console.log(media.structures, structureType, structureColor);
+                    let dx = chunkCoords.col * (CHUNK_WIDTH + CHUNK_FIT_X)
+                    let dy = chunkCoords.row * (CHUNK_HEIGHT + CHUNK_FIT_Y)
+
                     // this.setTransform(w + position.row, )
-                    ctx.drawImage(imgObject, 0, 0)
+                    ctx.drawImage(imgObject, dx + position.x - w, dy + position.y - h)
                 }
                 
                 if (yesMarkers.length){
@@ -85,16 +91,20 @@ export default class CanvasBoardHelper {
         })
 
         const exampleHex = {
-            "position": {
+            "coords": {
                 "row": 0,
-                "col": 0
+                "col": 1
             },
-            "terrainType": "desert",
-            "animalTerritory": "bear",
+            "terrainType": "water",
+            "animalTerritory": "none",
             "noMarker": "",
             "yesMarkers": [],
-            "structureColor": "",
-            "stuctureType": ""
+            "structureColor": "white",
+            "structureType": "as",
+            "position": {
+                "x": 65.78,
+                "y": 45.71
+            }
         }
 
         const examplePeice = {

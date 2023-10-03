@@ -1,6 +1,25 @@
 import cryptidMapData from "../data/cryptid-map-data"
 
+const CHUNK_WIDTH = 250,
+    CHUNK_HEIGHT = 160,
+    MASK_WIDTH = 54,
+    MASK_HEIGHT = 48,
+    STRUCTURE_WIDTH = 24,
+    STRUCTURE_HEIGHT = 24,
+    CHUNK_FIT_X = -14,
+    CHUNK_FIT_Y = -22
+
+
 export default {
+    CHUNK_WIDTH,
+    CHUNK_HEIGHT,
+    MASK_WIDTH,
+    MASK_HEIGHT,
+    STRUCTURE_WIDTH,
+    STRUCTURE_HEIGHT,
+    CHUNK_FIT_X,
+    CHUNK_FIT_Y,
+    
     getStructureData: function() {
         const structureData = []
         return structureData
@@ -34,8 +53,10 @@ export default {
         // loop through each map chunk
         chunks.forEach(chunk => {
             let { rotated, id, placed } = chunk
-            let dc = placed%2 * numCols
-            let dr = Math.floor(placed/2) * numRows
+            let chunkCol = placed%2
+            let chunkRow = Math.floor(placed/2)
+            let dc = chunkCol * numCols
+            let dr = chunkRow * numRows
 
             const setHexData = function(row, col) {
                 // position (row, col), from the loop index
@@ -56,7 +77,7 @@ export default {
                 hex.noMarker = ""
                 hex.yesMarkers = []
                 hex.structureColor = ""
-                hex.stuctureType = ""
+                hex.structureType = ""
                 
                 // find if there's a structure there (stop looking once passed current chunk or position)
                 structs.forEach(struct => {
@@ -66,6 +87,10 @@ export default {
                         hex.structureType = struct.id.split("-")[0]
                         hex.structureColor = struct.id.split("-")[1]
                         hex.position = { ...struct.position }
+                        hex.chunkCoords = {
+                            col: chunkCol,
+                            row: chunkRow
+                        }
                     }
                 })
             }
@@ -83,43 +108,3 @@ export default {
         return hexes
     }
 }
-
-/*
-
-    structures {
-        id: "as-white",
-        name: "Abandoned Shack, White",
-        image: p1,
-        chunkId: null,
-        coords: null,
-        position: null
-    }
-
-    mapChunks {
-        id: 2,
-        placed: null,
-        rotated: false,
-        image: chunkImages[2]
-    }
-
-    hex {
-        position: { row: 2, col: 0 },
-        terrainType: "water",
-        animalTerritory: "bear",
-        noMarker: "orange",
-        yesMarkers: [ "lightblue", "red" ]
-        structure: { color: "white", type: "as" },
-    }
-
-    mapData {
-        id: 0,
-        chunkId: 0,
-        row: 0,
-        col: 0,
-        terrain: "water",
-        territory: "none",
-        structureColor: "",
-        structureType: "",
-    },
-
-*/

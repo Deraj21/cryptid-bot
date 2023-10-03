@@ -33,12 +33,14 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 ## Todo
 ### "play game" functionality
 - ~~display board pieces' rotation~~
-- display structures
-- add custom menu on click
+- ~~display structures~~
+- look into the way I code rotation, and see if it needs to be rewritten
+- add custom menu on click (try to use )
 - make no/yes markers in some art program
 - display
   - no markers
   - yes markers
+- BUG: structures are not working when chunk is rotated
 
 ### other
 - test, test, test

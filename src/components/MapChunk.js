@@ -1,17 +1,14 @@
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { slotDraggingChunk, updateDraggingChunk, removeChunk, rotateChunk, placeStructure } from "../config/boardSlice"
+import dataHelper from "../utils/data.js"
 
 import placeholderChunk from "../media/board-chunks/placeholder.png"
-
 import p1 from "../media/structures/p1.png"
 import mask from '../media/mask.png'
 import redDot from '../media/red-dot.png'
 
-const MASK_WIDTH = 54
-const MASK_HEIGHT = 48
-const STRUCTURE_WIDTH = 24
-const STRUCTURE_HEIGHT = 24
+const { CHUNK_WIDTH, CHUNK_HEIGHT, MASK_WIDTH, MASK_HEIGHT, STRUCTURE_WIDTH, STRUCTURE_HEIGHT } = dataHelper
 
 export default function MapChunk(props) {
     // ducks
@@ -57,12 +54,10 @@ export default function MapChunk(props) {
                     return
                 let x = e.nativeEvent.offsetX
                 let y = e.nativeEvent.offsetY
-                let H = 160 // e.target.height
-                let h = H / 7
-                let W = 250 // e.target.width
-                let w = W / 9.5
+                let h = CHUNK_HEIGHT / 7
+                let w = CHUNK_WIDTH / 9.5
 
-                let r = Math.floor( w * Math.sin(60 / 180 * Math.PI) )
+                let radius = Math.floor( w * Math.sin(60 / 180 * Math.PI) )
 
                 for (let col = 0; col < 6; col++){
                     for (let row = 0; row < 3; row++) {
@@ -70,7 +65,7 @@ export default function MapChunk(props) {
                         let py = col % 2 === 0 ? row * 2 * h + h : row * 2 * h + (2 * h)
 
                         let d = Math.sqrt( Math.pow(x - px, 2) + Math.pow(y - py, 2) )
-                        if (d < r) {
+                        if (d < radius) {
                             setMaskPosition({x: px, y: py})
                             setMaskCoords({row, col})
                             return
