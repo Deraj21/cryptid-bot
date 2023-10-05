@@ -89,11 +89,12 @@ export default function MapChunk(props) {
                 setMaskCoords({row: null, col: null})
             }}
             onDrop={e => {
-                // if dragging map chunk
+                // DROP MAP CHUNK
                 if (!donePlacingChunks && droppable && draggingChunk !== null) {
                     dispatch(slotDraggingChunk(index))
                     setDroppable(false)
-                // if dragging structure
+
+                // DROP STRUCTURE
                 } else if (draggingStructure !== null) {
                     dispatch(placeStructure({
                         id: draggingStructure,

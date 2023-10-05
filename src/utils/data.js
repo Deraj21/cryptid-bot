@@ -80,13 +80,20 @@ export default {
                 hex.structureType = ""
                 
                 // find if there's a structure there (stop looking once passed current chunk or position)
-                structs.forEach(struct => {
-                    if (id === struct.chunkId && row === struct.coords.row && col === struct.coords.col) {
+                structs.filter(s => !!s.chunkId).forEach(struct => {
+                    let structRow = rotated ? 3 - 1 - struct.coords.row : struct.coords.row
+                    let structCol = rotated ? 6 - 1 - struct.coords.col : struct.coords.col
+                    console.log(structRow, struct.coords.row,
+                        structCol, struct.coords.col)
+                    if (id === struct.chunkId && row === structRow && col === structCol) {
                         // set structure for hex
                         // console.log();
                         hex.structureType = struct.id.split("-")[0]
                         hex.structureColor = struct.id.split("-")[1]
-                        hex.position = { ...struct.position }
+                        hex.position = {
+                            x: rotated ? CHUNK_WIDTH - struct.position.x : struct.position.x,
+                            y: rotated ? CHUNK_HEIGHT - struct.position.y : struct.position.y
+                        }
                         hex.chunkCoords = {
                             col: chunkCol,
                             row: chunkRow

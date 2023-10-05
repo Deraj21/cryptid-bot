@@ -32,15 +32,13 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 
 ## Todo
 ### "play game" functionality
-- ~~display board pieces' rotation~~
-- ~~display structures~~
-- look into the way I code rotation, and see if it needs to be rewritten
+- ~~BUG: structures are not working when chunk is rotated~~
 - add custom menu on click (try to use )
 - make no/yes markers in some art program
 - display
   - no markers
   - yes markers
-- BUG: structures are not working when chunk is rotated
+- a problem for future me: look into the way I code rotation, and see if it should be rewritten
 
 ### other
 - test, test, test
@@ -63,7 +61,7 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 - there's some crazy animation stuff going on when rotating, and dragging-dropping
   - maybe set all css animation settings to 0s and then start experimenting from there
 - should not be able to place multiple structures on one hex
-
+- structures can't be moved once placed; have to reload if placed incorrectly
 
 
 
