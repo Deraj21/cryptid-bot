@@ -33,8 +33,11 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 ## Todo
 ### "play game" functionality
 - ~~BUG: structures are not working when chunk is rotated~~
-- add custom menu on click (try to use )
-- make no/yes markers in some art program
+- ~~add custom menu on click (try to use materialUI)~~
+- ~~make no/yes markers in some art program~~
+- menu actions
+  - place cube
+  - place disk
 - display
   - no markers
   - yes markers

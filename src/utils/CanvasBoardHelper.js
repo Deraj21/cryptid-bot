@@ -37,7 +37,6 @@ export default class CanvasBoardHelper {
     }
 
     draw(peices, hexes) {
-        console.log("drawing")
         let { canvas, ctx } = this
         let { boardChunks, mask, structures } = media
         ctx.reset()
@@ -68,8 +67,6 @@ export default class CanvasBoardHelper {
                 // TODO: display structures
                 if (structureColor){
                     
-                    console.log(hex);
-
                     let imgObject = makeImg(media.structures[`${structureType}-${structureColor}`])
                     let w = imgObject.width / 2
                     let h = imgObject.height / 2

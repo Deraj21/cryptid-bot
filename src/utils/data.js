@@ -83,8 +83,6 @@ export default {
                 structs.filter(s => !!s.chunkId).forEach(struct => {
                     let structRow = rotated ? 3 - 1 - struct.coords.row : struct.coords.row
                     let structCol = rotated ? 6 - 1 - struct.coords.col : struct.coords.col
-                    console.log(structRow, struct.coords.row,
-                        structCol, struct.coords.col)
                     if (id === struct.chunkId && row === structRow && col === structCol) {
                         // set structure for hex
                         // console.log();
