@@ -1,18 +1,31 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Menu, MenuItem } from '@mui/material';
+import { NestedMenuItem } from 'mui-nested-menu';
 
 import CanvasBoardHelper from "../utils/CanvasBoardHelper";
 
 const canvasId = "cryptid-board-canvas"
 
 export default function PlayingBoard() {
+    "use strict";
 
     let hexes = useSelector(s => s.board.hexes)
     let peices = useSelector(s => s.board.mapChunks)
+    let players = useSelector(s => s.board.players)
     const [canvasHelper, setCanvasHelper] = useState(null)
     const [redrawTrigger, redraw] = useState(false)
     const [contextMenu, setContextMenu] = useState(null)
+
+    let activePlayers = []
+    for (let key in players){
+        activePlayers.push({
+            id: key,
+            ...players[key]
+        })
+    }
+    console.log(activePlayers)
+    
 
     const h = 600
     const w = 600
@@ -33,28 +46,29 @@ export default function PlayingBoard() {
             redraw(false)
     }, [canvasHelper, hexes, peices, redrawTrigger])
 
-    // listen for when a user right-clicks
-        // create menu (use material ui)
-        // on click of menu item -> update board data & redraw board
-
     const handleContextMenuClick = (e) => {
-        console.log('open menu')
-
         e.preventDefault()
-        setContextMenu(
-            contextMenu === null
-            ? {
-                mouseX: e.clientX,
-                mouseY: e.clientY,
-            } :
-            null
-        )
+        let mousePosition = {
+            mouseX: e.clientX,
+            mouseY: e.clientY
+        }
+
+        setContextMenu( contextMenu === null ? mousePosition : null )
     }
 
     const handleClose = (e) => {
-        console.log('menu item')
         setContextMenu(null)
     }
+
+    const handleColorClick = (playerColor) => {
+        console.log(playerColor)
+    }
+
+    const colorMenuItems = activePlayers.map(player => {
+        return (
+            <MenuItem onClick={(e) => handleColorClick(player.name)}>{player.name}</MenuItem>
+        )
+    })
 
     return (
         <div className="PlayingBoard">
@@ -71,8 +85,12 @@ export default function PlayingBoard() {
                     : undefined
                 }
             >
-                <MenuItem onClick={handleClose} >Place Cube</MenuItem>
-                <MenuItem onClick={handleClose} >Place Disk</MenuItem>
+                <NestedMenuItem label="Place Cube"
+                    onClick={handleClose}
+                >
+                    { colorMenuItems }
+                </NestedMenuItem>
+                <NestedMenuItem onClick={handleClose} >Place Disk</NestedMenuItem>
                 <MenuItem onClick={handleClose} >Ask Bot</MenuItem>
             </Menu>
             <button
