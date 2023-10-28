@@ -13,9 +13,12 @@ export default function PlayingBoard() {
     let hexes = useSelector(s => s.board.hexes)
     let peices = useSelector(s => s.board.mapChunks)
     let players = useSelector(s => s.board.players)
+
     const [canvasHelper, setCanvasHelper] = useState(null)
     const [redrawTrigger, redraw] = useState(false)
-    const [contextMenu, setContextMenu] = useState(null)
+    const [menuAnchor, setMenuAnchor] = useState(null)
+
+    const menuIsOpen = menuAnchor !== null
 
     let activePlayers = []
     for (let key in players){
@@ -24,8 +27,6 @@ export default function PlayingBoard() {
             ...players[key]
         })
     }
-    console.log(activePlayers)
-    
 
     const h = 600
     const w = 600
@@ -48,54 +49,91 @@ export default function PlayingBoard() {
 
     const handleContextMenuClick = (e) => {
         e.preventDefault()
+        console.log("hi")
         let mousePosition = {
             mouseX: e.clientX,
             mouseY: e.clientY
         }
 
-        setContextMenu( contextMenu === null ? mousePosition : null )
+        setMenuAnchor( !menuIsOpen ? mousePosition : null )
     }
 
     const handleClose = (e) => {
-        setContextMenu(null)
+        setMenuAnchor(null)
     }
 
-    const handleColorClick = (playerColor) => {
-        console.log(playerColor)
+    const handleColorClick = (e, playerColor, parentMenuId) => {
+        console.log(playerColor, parentMenuId)
+
+        // TODO: do stuff
+        handleClose()
     }
 
-    const colorMenuItems = activePlayers.map(player => {
-        return (
-            <MenuItem onClick={(e) => handleColorClick(player.name)}>{player.name}</MenuItem>
-        )
-    })
+    const handleAskBotClick = () => {
+        console.log("ask bot");
+        // TODO: do stuff
+        handleClose()
+    }
+
+    const getColorMenuItems = (parentMenuId) => {
+        return activePlayers.map(player => {
+            return (
+                <MenuItem
+                    onClick={(e) => handleColorClick(e, player.name, parentMenuId)}
+                >
+                    {player.name}
+                </MenuItem>
+            )
+        })
+    }
+    
 
     return (
         <div className="PlayingBoard">
             <canvas ref={canvasRef} id={canvasId} onContextMenu={handleContextMenuClick} height={h} width={w} >
                 Oops. It seems that the canvas broke.
             </canvas>
+
             <Menu
-                open={contextMenu !== null}
+                open={menuIsOpen}
                 onClose={handleClose}
                 anchorReference="anchorPosition"
                 anchorPosition={
-                  contextMenu !== null
-                    ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+                    menuIsOpen
+                    ? { top: menuAnchor.mouseY, left: menuAnchor.mouseX }
                     : undefined
                 }
             >
                 <NestedMenuItem label="Place Cube"
-                    onClick={handleClose}
+                    parentMenuOpen={menuIsOpen}
                 >
-                    { colorMenuItems }
+                    { getColorMenuItems("cube") }
                 </NestedMenuItem>
-                <NestedMenuItem onClick={handleClose} >Place Disk</NestedMenuItem>
-                <MenuItem onClick={handleClose} >Ask Bot</MenuItem>
+                <NestedMenuItem label="Place Disk"
+                    parentMenuOpen={menuIsOpen}
+                >
+                    { getColorMenuItems("disk") }
+                </NestedMenuItem>
+                <MenuItem onClick={handleAskBotClick} >Ask Bot</MenuItem>
             </Menu>
-            <button
-                onClick={() => redraw(true)}
-            >Redraw</button>
         </div>
     )
 }
+
+
+/*
+<NestedMenuItem
+    leftIcon={<AdbIcon />}
+    rightIcon={<ArrowRightIcon />}
+    label="Go deeper!"
+    parentMenuOpen={open}
+>
+    <MenuItem onClick={handleClose}>Standard Menu Item!</MenuItem>
+    <IconMenuItem
+        onClick={handleClose}
+        leftIcon={<NewIcon />}
+        rightIcon={<SaveIcon />}
+        label="Icon Menu Item"
+    />
+</NestedMenuItem>
+*/

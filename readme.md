@@ -33,7 +33,7 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 ## Todo
 ### "play game" functionality
 - ~~make no/yes markers in some art program~~
-- `LEFT OFF: nested menu items erroring for some reason.` 
+- `LEFT OFF: menu item functions are triggering correctly and ready to fill with code`
 - menu actions
   - place cube
   - place disk
