@@ -155,7 +155,7 @@ export const boardSlice = createSlice({
         draggingStructure: null,
         donePlacingChunks: false,
         donePlacingStructures: false,
-        hexes: null
+        hexes: []
     },
     reducers: {
         updatePlayer: (state, action) => {
@@ -171,6 +171,9 @@ export const boardSlice = createSlice({
         rotateChunk: (s, a) => {
             let chunk = s.mapChunks.find(chunk => chunk.id === a.payload)
             chunk.rotated = !chunk.rotated
+        },
+        setMapChunks: (s, a) => {
+            s.mapChunks = a.payload
         },
         updateDraggingChunk: (state, action) => {
             state.draggingChunk = action.payload
@@ -204,16 +207,19 @@ export const boardSlice = createSlice({
         setHexData: (s, a) => {
             s.hexes = a.payload
         },
-        placeYes: (s, a) => {
-            
+        placeYesMarker: (s, a) => {
+            let { row, col, color } = a.payload
+            let oldMarkersList = s.hexes[row][col].yesMarkers
+            oldMarkersList.push(color)
+            s.hexes[row][col].yesMarkers = [ ...oldMarkersList ]
         },
-        placeNo: (s, a) => {
-
+        placeNoMarker: (s, a) => {
+            let { row, col, color } = a.payload
         }
     }
 })
 
-export const { updatePlayer, slotDraggingChunk, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, placeYes, placeNo } = boardSlice.actions
+export const { updatePlayer, slotDraggingChunk, setMapChunks, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, placeYesMarker, placeNoMarker } = boardSlice.actions
 
 export default boardSlice.reducer
 

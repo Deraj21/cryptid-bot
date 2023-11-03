@@ -2,6 +2,8 @@ import cryptidMapData from "../data/cryptid-map-data"
 
 const CHUNK_WIDTH = 250,
     CHUNK_HEIGHT = 160,
+    HEX_WIDTH = CHUNK_WIDTH / 9.5,
+    HEX_HEIGHT = CHUNK_HEIGHT / 7,
     MASK_WIDTH = 54,
     MASK_HEIGHT = 48,
     STRUCTURE_WIDTH = 24,
@@ -13,6 +15,8 @@ const CHUNK_WIDTH = 250,
 export default {
     CHUNK_WIDTH,
     CHUNK_HEIGHT,
+    HEX_HEIGHT,
+    HEX_WIDTH,
     MASK_WIDTH,
     MASK_HEIGHT,
     STRUCTURE_WIDTH,
@@ -59,7 +63,7 @@ export default {
             let dr = chunkRow * numRows
 
             const setHexData = function(row, col) {
-                // position (row, col), from the loop index
+                // coords (row, col), from the loop index
                 let coords = {
                     row: rotated ? numRows - 1 - row : row,
                     col: rotated ? numCols - 1 - col : col
@@ -67,7 +71,7 @@ export default {
                 let hex = hexes[dr + row][dc + col]
                 hex.coords = {row: dr + row, col: dc + col}
                 
-                // use position to get the terrain type and animal territory
+                // use coords to get the terrain type and animal territory
                 let data = cryptidMapData.find(d => {
                     return id === d.chunkId && coords.row === d.row && coords.col === d.col
                 })
@@ -81,8 +85,8 @@ export default {
                 
                 // find if there's a structure there (stop looking once passed current chunk or position)
                 structs.filter(s => !!s.chunkId).forEach(struct => {
-                    let structRow = rotated ? 3 - 1 - struct.coords.row : struct.coords.row
-                    let structCol = rotated ? 6 - 1 - struct.coords.col : struct.coords.col
+                    let structRow = rotated ? numRows - 1 - struct.coords.row : struct.coords.row
+                    let structCol = rotated ? numCols - 1 - struct.coords.col : struct.coords.col
                     if (id === struct.chunkId && row === structRow && col === structCol) {
                         // set structure for hex
                         // console.log();

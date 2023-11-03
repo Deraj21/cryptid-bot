@@ -1,7 +1,7 @@
 import media from '../utils/media.js'
 import dataHelper from "../utils/data.js"
 
-const { CHUNK_WIDTH, CHUNK_HEIGHT, MASK_WIDTH, MASK_HEIGHT, STRUCTURE_WIDTH, STRUCTURE_HEIGHT, CHUNK_FIT_X, CHUNK_FIT_Y, } = dataHelper
+const { CHUNK_WIDTH, CHUNK_HEIGHT, MASK_WIDTH, MASK_HEIGHT, STRUCTURE_WIDTH, STRUCTURE_HEIGHT, CHUNK_FIT_X, CHUNK_FIT_Y, HEX_HEIGHT, HEX_WIDTH } = dataHelper
 
 function makeImg(src) {
     let i = new Image()
@@ -36,6 +36,23 @@ export default class CanvasBoardHelper {
         ctx.rotate(rotation)
     }
 
+    getCoordinatesFromScreenPosition(x, y) {
+        let row, col
+
+        
+        
+        return { row, col }
+    }
+
+    getScreenPositionFromCoordinates(row, col) {
+        let doubleIfOdd = col % 2 !== 0 ? 2 : 1
+
+        let x = col * 1.5 * HEX_WIDTH + HEX_WIDTH
+        let y = row * 2 * HEX_HEIGHT + (doubleIfOdd * HEX_HEIGHT)
+
+        return { x, y }
+    }
+
     draw(peices, hexes) {
         let { canvas, ctx } = this
         let { boardChunks, mask, structures } = media
@@ -64,17 +81,16 @@ export default class CanvasBoardHelper {
                 // let dx = position.row * 
                 // let dy 
                 
-                // TODO: display structures
                 if (structureColor){
                     
                     let imgObject = makeImg(media.structures[`${structureType}-${structureColor}`])
-                    let w = imgObject.width / 2
-                    let h = imgObject.height / 2
+                    let halfWidth = imgObject.width / 2
+                    let halfHeight = imgObject.height / 2
                     let dx = chunkCoords.col * (CHUNK_WIDTH + CHUNK_FIT_X)
                     let dy = chunkCoords.row * (CHUNK_HEIGHT + CHUNK_FIT_Y)
 
                     // this.setTransform(w + position.row, )
-                    ctx.drawImage(imgObject, dx + position.x - w, dy + position.y - h)
+                    ctx.drawImage(imgObject, dx + position.x - halfWidth, dy + position.y - halfHeight)
                 }
                 
                 if (yesMarkers.length){

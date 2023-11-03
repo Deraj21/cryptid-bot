@@ -54,19 +54,21 @@ export default function MapChunk(props) {
                     return
                 let x = e.nativeEvent.offsetX
                 let y = e.nativeEvent.offsetY
-                let h = CHUNK_HEIGHT / 7
-                let w = CHUNK_WIDTH / 9.5
+                let hexHeight = CHUNK_HEIGHT / 7
+                let hexWidth = CHUNK_WIDTH / 9.5
 
-                let radius = Math.floor( w * Math.sin(60 / 180 * Math.PI) )
+                let radius = Math.floor( hexWidth * Math.sin(60 / 180 * Math.PI) )
 
                 for (let col = 0; col < 6; col++){
                     for (let row = 0; row < 3; row++) {
-                        let px = col * 1.5 * w + w
-                        let py = col % 2 === 0 ? row * 2 * h + h : row * 2 * h + (2 * h)
+                        let doubleIfOdd = col % 2 !== 0 ? 2 : 1
+                        let hexCenter = { x, y }
+                        hexCenter.x = col * 1.5 * hexWidth + hexWidth
+                        hexCenter.y = row * 2 * hexHeight + (doubleIfOdd * hexHeight)
 
-                        let d = Math.sqrt( Math.pow(x - px, 2) + Math.pow(y - py, 2) )
-                        if (d < radius) {
-                            setMaskPosition({x: px, y: py})
+                        let distance = Math.sqrt( Math.pow(x - hexCenter.x, 2) + Math.pow(y - hexCenter.y, 2) )
+                        if (distance < radius) {
+                            setMaskPosition({x: hexCenter.x, y: hexCenter.y})
                             setMaskCoords({row, col})
                             return
                         }

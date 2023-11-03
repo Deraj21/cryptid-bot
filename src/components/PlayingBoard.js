@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Menu, MenuItem } from '@mui/material';
 import { NestedMenuItem } from 'mui-nested-menu';
+import { placeNoMarker, placeYesMarker, setHexData, setMapChunks } from "../config/boardSlice";
+import { dummyHexes, dummyMapPeices } from "../data/dummyData"
 
 import CanvasBoardHelper from "../utils/CanvasBoardHelper";
 
@@ -42,14 +44,10 @@ export default function PlayingBoard() {
             // draw the board initially
             canvasHelper.draw([ ...peices ], [ ...hexes ])
         }
-
-        if (redraw)
-            redraw(false)
     }, [canvasHelper, hexes, peices, redrawTrigger])
 
     const handleContextMenuClick = (e) => {
         e.preventDefault()
-        console.log("hi")
         let mousePosition = {
             mouseX: e.clientX,
             mouseY: e.clientY
@@ -66,6 +64,15 @@ export default function PlayingBoard() {
         console.log(playerColor, parentMenuId)
 
         // TODO: do stuff
+        if (parentMenuId === "disk") {
+            // let coords = CanvasBoardHelper.getCoordinatesFromScreenPosition(anchorPosition.x, anchorPosition.y)
+            console.log({
+                menuAnchor
+            })
+        } else if (parentMenuId === "cube") {
+
+        }
+
         handleClose()
     }
 
@@ -78,7 +85,7 @@ export default function PlayingBoard() {
     const getColorMenuItems = (parentMenuId) => {
         return activePlayers.map(player => {
             return (
-                <MenuItem
+                <MenuItem key={player.name}
                     onClick={(e) => handleColorClick(e, player.name, parentMenuId)}
                 >
                     {player.name}
@@ -119,21 +126,3 @@ export default function PlayingBoard() {
         </div>
     )
 }
-
-
-/*
-<NestedMenuItem
-    leftIcon={<AdbIcon />}
-    rightIcon={<ArrowRightIcon />}
-    label="Go deeper!"
-    parentMenuOpen={open}
->
-    <MenuItem onClick={handleClose}>Standard Menu Item!</MenuItem>
-    <IconMenuItem
-        onClick={handleClose}
-        leftIcon={<NewIcon />}
-        rightIcon={<SaveIcon />}
-        label="Icon Menu Item"
-    />
-</NestedMenuItem>
-*/
