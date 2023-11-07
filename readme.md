@@ -30,41 +30,10 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 
 ---
 
-## Todo
-### "play game" functionality
-- ~~make no/yes markers in some art program~~
-- `LEFT OFF: menu item functions are triggering correctly and ready to fill with code`
-- menu actions
-  - place cube
-  - place disk
-- display
-  - no markers
-  - yes markers
-- a problem for future me: look into the way I code rotation, and see if it should be rewritten
+`LAST`
+added 'randomize board' button for testing purposes
 
-### other
-- test, test, test
-
-### future ideas
-- reset chunk placement button (prevents user from having to reload page and start from scratch)
-- map chunks can be swapped
-- bot can take its own turn (randomly selects a player and a hex and asks)
-  - (way down the line) bot acts like a player, and decides who to ask where based on what information it still needs
-- map solver visualization tool
-  - map can highlight areas of the map based on inputted clues, to see the overlap
-  - ex: all hexes 3 from blue structure colored in blue, hexes within 1 of forest highlighted in red, and the overlapping purple hexes are the possibilities
-
----
-
-## Bugs
-- board chunks can be placed on top of other board chunks, effectively 'deleting' one of the chunks from being able to be placed
-- sometimes board chunks won't allow drag and drop
-- would be nice if board chunks retained their rotation state when being moved
-- there's some crazy animation stuff going on when rotating, and dragging-dropping
-  - maybe set all css animation settings to 0s and then start experimenting from there
-- should not be able to place multiple structures on one hex
-- structures can't be moved once placed; have to reload if placed incorrectly
-
-
+`NEXT`
+place cubes and disks on the board in play mode
 
 

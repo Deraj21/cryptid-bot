@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
-import { slotDraggingChunk, updateDraggingChunk, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData } from "../config/boardSlice"
+import { slotDraggingChunk, updateDraggingChunk, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, randomizeBoard } from "../config/boardSlice"
 import MapChunk from "./MapChunk"
 import Ruler from "./Ruler"
 import dataHelper from "../utils/data"
@@ -14,19 +14,6 @@ export default function BoardSetup() {
         structures = useSelector(s => s.board.structures),
         donePlacingChunks = useSelector(s => s.board.donePlacingChunks)
     let mapChunks = useSelector(s => s.board.mapChunks)
-
-    let hexes = useSelector(s => s.board.hexes)
-
-    // if (hexes && hexes.length){
-        
-    //     let text = hexes.map(row => {
-    //         return row.map(hex => {
-    //             return hex.terrainType[0]
-    //         }).join(' ')
-    //     }).join('\n')
-
-    //     console.log(text)
-    // }
 
     // react-router
     let navigate = useNavigate()
@@ -95,6 +82,7 @@ export default function BoardSetup() {
     return (
         <div className="BoardSetup">
             <h1>Setup Board</h1>
+            <button onClick={() => dispatch(randomizeBoard())} >Randomize Board</button>
             <div className="placement-container">
                 <h3>{placementLabel}</h3>
                 {

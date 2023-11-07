@@ -6,6 +6,7 @@ import { placeNoMarker, placeYesMarker, setHexData, setMapChunks } from "../conf
 import { dummyHexes, dummyMapPeices } from "../data/dummyData"
 
 import CanvasBoardHelper from "../utils/CanvasBoardHelper";
+import Canvas from "./Canvas";
 
 const canvasId = "cryptid-board-canvas"
 
@@ -16,10 +17,10 @@ export default function PlayingBoard() {
     let peices = useSelector(s => s.board.mapChunks)
     let players = useSelector(s => s.board.players)
 
-    const [canvasHelper, setCanvasHelper] = useState(null)
+    // const [canvasHelper, setCanvasHelper] = useState(null)
     const [redrawTrigger, redraw] = useState(false)
     const [menuAnchor, setMenuAnchor] = useState(null)
-
+    
     const menuIsOpen = menuAnchor !== null
 
     let activePlayers = []
@@ -32,19 +33,6 @@ export default function PlayingBoard() {
 
     const h = 600
     const w = 600
-    
-    const canvasRef = useRef(null)
-
-    useEffect(() => {
-        let canvas = canvasRef.current
-        // create board helper
-        if (!canvasHelper){
-            setCanvasHelper( new CanvasBoardHelper(canvas) )
-        } else {
-            // draw the board initially
-            canvasHelper.draw([ ...peices ], [ ...hexes ])
-        }
-    }, [canvasHelper, hexes, peices, redrawTrigger])
 
     const handleContextMenuClick = (e) => {
         e.preventDefault()
@@ -97,9 +85,7 @@ export default function PlayingBoard() {
 
     return (
         <div className="PlayingBoard">
-            <canvas ref={canvasRef} id={canvasId} onContextMenu={handleContextMenuClick} height={h} width={w} >
-                Oops. It seems that the canvas broke.
-            </canvas>
+            <Canvas onContextMenu={handleContextMenuClick} height={h} width={w} id={canvasId} />
 
             <Menu
                 open={menuIsOpen}
@@ -116,6 +102,7 @@ export default function PlayingBoard() {
                 >
                     { getColorMenuItems("cube") }
                 </NestedMenuItem>
+
                 <NestedMenuItem label="Place Disk"
                     parentMenuOpen={menuIsOpen}
                 >

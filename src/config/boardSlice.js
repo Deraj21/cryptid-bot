@@ -1,6 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 import dataHelper from "../utils/data"
+import { dummyHexes } from "../data/dummyData";
+import { dummyMapPeices } from "../data/dummyData";
 
 // structure images
 import p1 from "../media/structures/p1.png"
@@ -19,6 +21,8 @@ import chunk_image_3 from "../media/board-chunks/3.png"
 import chunk_image_4 from "../media/board-chunks/4.png"
 import chunk_image_5 from "../media/board-chunks/5.png"
 let chunkImages = [ chunk_image_0, chunk_image_1, chunk_image_2, chunk_image_3, chunk_image_4, chunk_image_5 ]
+
+const flipCoin = () => !!Math.floor(Math.random() * 2)
 
 export const boardSlice = createSlice({
     name: 'board',
@@ -111,44 +115,14 @@ export const boardSlice = createSlice({
                 position: null
             },
         ],
-        mapChunks: [
-            {
-                id: 0,
+        mapChunks: [0, 1, 2, 3, 4, 5].map(id => {
+            return {
+                id: id,
                 placed: null,
                 rotated: false,
-                image: chunkImages[0]
-            },
-            {
-                id: 1,
-                placed: null,
-                rotated: false,
-                image: chunkImages[1]
-            },
-            {
-                id: 2,
-                placed: null,
-                rotated: false,
-                image: chunkImages[2]
-            },
-            {
-                id: 3,
-                placed: null,
-                rotated: false,
-                image: chunkImages[3]
-            },
-            {
-                id: 4,
-                placed: null,
-                rotated: false,
-                image: chunkImages[4]
-            },
-            {
-                id: 5,
-                placed: null,
-                rotated: false,
-                image: chunkImages[5]
+                image: chunkImages[id]
             }
-        ],
+        }),
         draggingChunk: null,
         fromChunk: null,
         isAdvancedMode: false,
@@ -215,11 +189,46 @@ export const boardSlice = createSlice({
         },
         placeNoMarker: (s, a) => {
             let { row, col, color } = a.payload
+        },
+        randomizeBoard: (s, a) => {
+            let availableSlots = [0, 1, 2, 3, 4, 5]
+            // filter map chunks if it's already been placed
+            let unplacedChunks = s.mapChunks.filter(chunk => {
+                if (chunk.placed !== null) {
+                    let i = availableSlots.findIndex(slot => slot == chunk.placed)
+                    availableSlots.splice(i, 1)
+                    return false
+                }
+                return true
+            })
+
+            // loop through unplaced, and assign random slot
+            unplacedChunks.forEach(chunk => {
+                let randomIndex = Math.floor(Math.random() * availableSlots.length)
+                chunk.placed = availableSlots.splice(randomIndex, 1)[0]
+                chunk.rotated = flipCoin()
+            })
+
+            s.donePlacingChunks = true
+
+            let numRows = 3
+            let numCols = 6
+
+            // loop through structures
+            s.structures.forEach((structure, i) => {
+                let row = Math.floor(Math.random() * numRows)
+                let col = Math.floor(Math.random() * numCols)
+                structure.chunkId = i
+                structure.coords = {row, col}
+                structure.position = dataHelper.getScreenPositionFromCoordinates(row, col)
+            })
+
+            s.donePlacingStructures = true
         }
     }
 })
 
-export const { updatePlayer, slotDraggingChunk, setMapChunks, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, placeYesMarker, placeNoMarker } = boardSlice.actions
+export const { updatePlayer, slotDraggingChunk, setMapChunks, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, placeYesMarker, placeNoMarker, setDummyData, randomizeBoard } = boardSlice.actions
 
 export default boardSlice.reducer
 

@@ -1,20 +1,16 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PlayingBoard from "../components/PlayingBoard";
 import { Link } from "react-router-dom";
-import { setHexData, setMapChunks } from "../config/boardSlice";
-import { dummyHexes, dummyMapPeices } from "../data/dummyData";
+import { setDummyData } from "../config/boardSlice";
 
 export default function PlayPage() {
+
+    const dispatch = useDispatch()
 
     let hexes = useSelector(s => s.board.hexes)
     let peices = useSelector(s => s.board.mapChunks)
 
-    // TODO: remove later (for debugging)
-    console.log(hexes)
-    if (!hexes) {
-        setHexData([ ...dummyHexes ])
-        setMapChunks([ ...dummyMapPeices ])
-    }
+    
 
     return (
         <div className="PlayPage" >

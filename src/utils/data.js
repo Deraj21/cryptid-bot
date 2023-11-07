@@ -28,6 +28,21 @@ export default {
         const structureData = []
         return structureData
     },
+    getCoordinatesFromScreenPosition: function(x, y) {
+        let row, col
+
+        
+        
+        return { row, col }
+    },
+    getScreenPositionFromCoordinates: function(row, col) {
+        let doubleIfOdd = col % 2 !== 0 ? 2 : 1
+
+        let x = col * 1.5 * HEX_WIDTH + HEX_WIDTH
+        let y = row * 2 * HEX_HEIGHT + (doubleIfOdd * HEX_HEIGHT)
+
+        return { x, y }
+    },
     convertSetupToPlay: function(mapChunks, structures) {
         // sort structures by chunkId
         let structs = [ ...structures ]

@@ -13,13 +13,6 @@ export default class CanvasBoardHelper {
     constructor(canvas) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
-
-        this.H = canvas.getAttribute("height")
-        this.W = canvas.getAttribute("width")
-        this.chunkH = this.H / 3
-        this.chunkW = this.W / 2
-        this.h = this.H / 9
-        this.w = this.W / 12
     }
 
     /**
@@ -36,30 +29,13 @@ export default class CanvasBoardHelper {
         ctx.rotate(rotation)
     }
 
-    getCoordinatesFromScreenPosition(x, y) {
-        let row, col
-
-        
-        
-        return { row, col }
-    }
-
-    getScreenPositionFromCoordinates(row, col) {
-        let doubleIfOdd = col % 2 !== 0 ? 2 : 1
-
-        let x = col * 1.5 * HEX_WIDTH + HEX_WIDTH
-        let y = row * 2 * HEX_HEIGHT + (doubleIfOdd * HEX_HEIGHT)
-
-        return { x, y }
-    }
-
-    draw(peices, hexes) {
+    draw(pieces, hexes) {
         let { canvas, ctx } = this
         let { boardChunks, mask, structures } = media
         ctx.reset()
         
         // draw board peices
-        peices.sort((a, b) => a.placed - b.placed)
+        pieces.sort((a, b) => a.placed - b.placed)
             .forEach((peice, i) => {
 
                 let dx = (i % 2) * (CHUNK_WIDTH + CHUNK_FIT_X)
