@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Menu, MenuItem } from '@mui/material';
 import { NestedMenuItem } from 'mui-nested-menu';
 import { placeNoMarker, placeYesMarker, setHexData, setMapChunks } from "../config/boardSlice";
 import { dummyHexes, dummyMapPeices } from "../data/dummyData"
 
 import CanvasBoardHelper from "../utils/CanvasBoardHelper";
+import dataHelper from "../utils/data"
 import Canvas from "./Canvas";
 
 const canvasId = "cryptid-board-canvas"
@@ -13,9 +14,12 @@ const canvasId = "cryptid-board-canvas"
 export default function PlayingBoard() {
     "use strict";
 
+    const dispatch = useDispatch()
+
     let hexes = useSelector(s => s.board.hexes)
     let peices = useSelector(s => s.board.mapChunks)
     let players = useSelector(s => s.board.players)
+    let currentHex = useSelector(s => s.board.currentHex)
 
     // const [canvasHelper, setCanvasHelper] = useState(null)
     const [redrawTrigger, redraw] = useState(false)
@@ -48,15 +52,12 @@ export default function PlayingBoard() {
         setMenuAnchor(null)
     }
 
-    const handleColorClick = (e, playerColor, parentMenuId) => {
-        console.log(playerColor, parentMenuId)
+    const handleColorClick = (e, color, parentMenuId) => {
+        let {row, col} = currentHex
 
         // TODO: do stuff
         if (parentMenuId === "disk") {
-            // let coords = CanvasBoardHelper.getCoordinatesFromScreenPosition(anchorPosition.x, anchorPosition.y)
-            console.log({
-                menuAnchor
-            })
+            dispatch(placeYesMarker({row, col, color}))
         } else if (parentMenuId === "cube") {
 
         }
@@ -85,7 +86,11 @@ export default function PlayingBoard() {
 
     return (
         <div className="PlayingBoard">
-            <Canvas onContextMenu={handleContextMenuClick} height={h} width={w} id={canvasId} />
+            <Canvas id={canvasId}
+                onContextMenu={handleContextMenuClick}
+                height={h}
+                width={w}
+            />
 
             <Menu
                 open={menuIsOpen}

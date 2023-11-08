@@ -12,6 +12,15 @@ const CHUNK_WIDTH = 250,
     CHUNK_FIT_Y = -22
 
 
+const isEven = n => n % 2 === 0
+
+const distanceBetweenPoints = (x1, y1, x2, y2) => {
+    let dx = Math.abs(x1 - x2)
+    let dy = Math.abs(y1 - y2)
+
+    return Math.sqrt(dx * dx + dy * dy)
+}
+
 export default {
     CHUNK_WIDTH,
     CHUNK_HEIGHT,
@@ -23,19 +32,65 @@ export default {
     STRUCTURE_HEIGHT,
     CHUNK_FIT_X,
     CHUNK_FIT_Y,
-    
-    getStructureData: function() {
+
+    getStructureData: function () {
         const structureData = []
         return structureData
     },
-    getCoordinatesFromScreenPosition: function(x, y) {
-        let row, col
-
-        
-        
-        return { row, col }
+    getClosestCenterpoint: function (x, y) {
+        let { row, col } = this.getCoordinatesFromScreenPosition(x, y)
+        return this.getScreenPositionFromCoordinates(row, col)
     },
-    getScreenPositionFromCoordinates: function(row, col) {
+    getCoordinatesFromScreenPosition: function (x, y) {
+        let hexCenterX = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(col => {
+            return HEX_WIDTH + (col * HEX_WIDTH * 1.5)
+        })
+
+        let hexCenterY = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].map(row => {
+            return (row + 1) * HEX_HEIGHT
+        })
+
+        hexCenterX.push(x)
+        hexCenterY.push(y)
+        hexCenterX.sort((a, b) => a - b)
+        hexCenterY.sort((a, b) => a - b)
+        let xIndex = hexCenterX.findIndex(xValue => xValue === x)
+        let yIndex = hexCenterY.findIndex(yValue => yValue === y)
+
+        let up
+        if (isEven(xIndex) && isEven(yIndex) || !isEven(xIndex) && !isEven(yIndex)) {
+            up = false
+        } else {
+            up = true
+        }
+
+        let point1 = {
+            x: hexCenterX[xIndex - 1],
+            y: up ? hexCenterY[yIndex + 1] : hexCenterY[yIndex - 1]
+        }
+
+        let point2 = {
+            x: hexCenterX[xIndex + 1],
+            y: up ? hexCenterY[yIndex - 1] : hexCenterY[yIndex + 1]
+        }
+
+        let distance1 = distanceBetweenPoints(x, y, point1.x, point1.y)
+        let distance2 = distanceBetweenPoints(x, y, point2.x, point2.y)
+
+        let coords = {}
+        if (distance1 < distance2) {
+            // point1
+            coords.col = xIndex - 1
+            coords.row = Math.floor((up ? yIndex : yIndex - 1) / 2)
+        } else {
+            // point2
+            coords.col = xIndex
+            coords.row = Math.floor((up ? yIndex - 1 : yIndex) / 2)
+        }
+
+        return coords
+    },
+    getScreenPositionFromCoordinates: function (row, col) {
         let doubleIfOdd = col % 2 !== 0 ? 2 : 1
 
         let x = col * 1.5 * HEX_WIDTH + HEX_WIDTH
@@ -43,49 +98,49 @@ export default {
 
         return { x, y }
     },
-    convertSetupToPlay: function(mapChunks, structures) {
+    convertSetupToPlay: function (mapChunks, structures) {
         // sort structures by chunkId
-        let structs = [ ...structures ]
+        let structs = [...structures]
         // structs.sort((a, b) => a.chunkId - b.chunkId)
-        
+
         // sort map chunks by placement
-        let chunks = [ ...mapChunks ]
+        let chunks = [...mapChunks]
         chunks.sort((a, b) => a.placed - b.placed)
 
         let hexes = [
-            [{},{},{},{},{},{}, {},{},{},{},{},{},],
-            [{},{},{},{},{},{}, {},{},{},{},{},{},],
-            [{},{},{},{},{},{}, {},{},{},{},{},{},],
+            [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},],
+            [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},],
+            [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},],
 
-            [{},{},{},{},{},{}, {},{},{},{},{},{},],
-            [{},{},{},{},{},{}, {},{},{},{},{},{},],
-            [{},{},{},{},{},{}, {},{},{},{},{},{},],
+            [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},],
+            [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},],
+            [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},],
 
-            [{},{},{},{},{},{}, {},{},{},{},{},{},],
-            [{},{},{},{},{},{}, {},{},{},{},{},{},],
-            [{},{},{},{},{},{}, {},{},{},{},{},{},],
+            [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},],
+            [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},],
+            [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},],
         ]
 
         let numCols = 6
         let numRows = 3
-        
+
         // loop through each map chunk
         chunks.forEach(chunk => {
             let { rotated, id, placed } = chunk
-            let chunkCol = placed%2
-            let chunkRow = Math.floor(placed/2)
+            let chunkCol = placed % 2
+            let chunkRow = Math.floor(placed / 2)
             let dc = chunkCol * numCols
             let dr = chunkRow * numRows
 
-            const setHexData = function(row, col) {
+            const setHexData = function (row, col) {
                 // coords (row, col), from the loop index
                 let coords = {
                     row: rotated ? numRows - 1 - row : row,
                     col: rotated ? numCols - 1 - col : col
                 }
                 let hex = hexes[dr + row][dc + col]
-                hex.coords = {row: dr + row, col: dc + col}
-                
+                hex.coords = { row: dr + row, col: dc + col }
+
                 // use coords to get the terrain type and animal territory
                 let data = cryptidMapData.find(d => {
                     return id === d.chunkId && coords.row === d.row && coords.col === d.col
@@ -97,7 +152,7 @@ export default {
                 hex.yesMarkers = []
                 hex.structureColor = ""
                 hex.structureType = ""
-                
+
                 // find if there's a structure there (stop looking once passed current chunk or position)
                 structs.filter(s => !!s.chunkId).forEach(struct => {
                     let structRow = rotated ? numRows - 1 - struct.coords.row : struct.coords.row
@@ -120,13 +175,13 @@ export default {
             }
 
             // (loop) for each hex in the chunk
-            for (let row = 0; row < numRows; row++){
-                for (let col = 0; col < numCols; col++){
+            for (let row = 0; row < numRows; row++) {
+                for (let col = 0; col < numCols; col++) {
                     setHexData(row, col)
                 }
             }
 
-            
+
         })
 
         return hexes

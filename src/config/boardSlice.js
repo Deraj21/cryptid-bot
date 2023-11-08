@@ -129,7 +129,8 @@ export const boardSlice = createSlice({
         draggingStructure: null,
         donePlacingChunks: false,
         donePlacingStructures: false,
-        hexes: []
+        hexes: [],
+        currentHex: {row: null, col: null}
     },
     reducers: {
         updatePlayer: (state, action) => {
@@ -182,6 +183,7 @@ export const boardSlice = createSlice({
             s.hexes = a.payload
         },
         placeYesMarker: (s, a) => {
+            // TODO: currently erroring
             let { row, col, color } = a.payload
             let oldMarkersList = s.hexes[row][col].yesMarkers
             oldMarkersList.push(color)
@@ -189,6 +191,10 @@ export const boardSlice = createSlice({
         },
         placeNoMarker: (s, a) => {
             let { row, col, color } = a.payload
+        },
+        setCurrentHex: (s, a) => {
+            s.currentHex.row = a.payload.row
+            s.currentHex.col = a.payload.col
         },
         randomizeBoard: (s, a) => {
             let availableSlots = [0, 1, 2, 3, 4, 5]
@@ -228,7 +234,7 @@ export const boardSlice = createSlice({
     }
 })
 
-export const { updatePlayer, slotDraggingChunk, setMapChunks, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, placeYesMarker, placeNoMarker, setDummyData, randomizeBoard } = boardSlice.actions
+export const { updatePlayer, slotDraggingChunk, setMapChunks, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, placeYesMarker, placeNoMarker, setCurrentHex, randomizeBoard } = boardSlice.actions
 
 export default boardSlice.reducer
 

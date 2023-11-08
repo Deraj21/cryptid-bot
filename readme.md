@@ -31,9 +31,10 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 ---
 
 `LAST`
-added 'randomize board' button for testing purposes
+added functions for finding the hex row and column of a mouse position on the canvas
 
 `NEXT`
 place cubes and disks on the board in play mode
+(the reducer function 'placeYesMarker' needs to be looked at)
 
 

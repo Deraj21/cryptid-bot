@@ -29,8 +29,23 @@ export default class CanvasBoardHelper {
         ctx.rotate(rotation)
     }
 
+    drawPoint(x, y, color = "red"){
+        let { ctx } = this
+
+        ctx.fillStyle = color
+        ctx.beginPath()
+        ctx.arc(x, y, 2, 0, Math.PI * 2)
+        ctx.fill()
+    }
+
+    drawMask(x, y){
+        let { ctx } = this
+        let maskImage = makeImg(media.mask)
+        ctx.drawImage(maskImage, x - maskImage.width / 2, y - maskImage.height / 2)
+    }
+
     draw(pieces, hexes) {
-        let { canvas, ctx } = this
+        let { ctx } = this
         let { boardChunks, mask, structures } = media
         ctx.reset()
         
@@ -70,11 +85,11 @@ export default class CanvasBoardHelper {
                 }
                 
                 if (yesMarkers.length){
-
+                    // TODO: display disks
                 }
-
+                
                 if (noMarker){
-
+                    // TODO: display cubes
                 }
             })
         })
