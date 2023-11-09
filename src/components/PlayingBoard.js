@@ -58,8 +58,8 @@ export default function PlayingBoard() {
         // TODO: do stuff
         if (parentMenuId === "disk") {
             dispatch(placeYesMarker({row, col, color}))
-        } else if (parentMenuId === "cube") {
-
+        } else if (parentMenuId === "cube" && !hexes[row][col].noMarker) {
+            dispatch(placeNoMarker({row, col, color}))
         }
 
         handleClose()

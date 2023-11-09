@@ -166,10 +166,6 @@ export default {
                             x: rotated ? CHUNK_WIDTH - struct.position.x : struct.position.x,
                             y: rotated ? CHUNK_HEIGHT - struct.position.y : struct.position.y
                         }
-                        hex.chunkCoords = {
-                            col: chunkCol,
-                            row: chunkRow
-                        }
                     }
                 })
             }

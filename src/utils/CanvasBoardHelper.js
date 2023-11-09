@@ -44,6 +44,55 @@ export default class CanvasBoardHelper {
         ctx.drawImage(maskImage, x - maskImage.width / 2, y - maskImage.height / 2)
     }
 
+    drawDisk(x, y, color) {
+        console.log("draw disk", color);
+        let { ctx } = this
+        let radius = 5
+
+        ctx.fillStyle = color.replaceAll(" ", "")
+        ctx.strokeStyle = "white"
+        ctx.beginPath()
+        ctx.arc(x, y, radius, 0, Math.PI * 2)
+        ctx.closePath()
+        ctx.fill()
+        ctx.stroke()
+    }
+
+    drawCube(x, y, color) {
+        console.log("draw cube", color);
+        let {ctx} = this
+        let side = 10
+        let half = side / 2
+
+        ctx.fillStyle = color.replaceAll(" ", "")
+        ctx.strokeStyle = "white"
+        ctx.fillRect(x - half, y - half, side, side)
+        ctx.strokeRect(x - half, y - half, side, side)
+    }
+
+    drawMarkers(x, y, yesMarkers, noMarker) {
+        let markerCount = noMarker ? 1 : 0
+        markerCount += yesMarkers.length
+        let radius = HEX_WIDTH / 1.7
+        let angle = Math.PI * 2 / markerCount
+
+        if (markerCount)
+            console.log(markerCount, yesMarkers, noMarker)
+        
+        for (let i = 0; i < markerCount; i++){
+            let dx = radius * Math.cos(angle * i)
+            let dy = radius * Math.sin(angle * i)
+
+            let color = yesMarkers[i]
+            console.log(color)
+            if (!color){
+                this.drawCube(x + dx, y + dy, noMarker)
+            } else {
+                this.drawDisk(x + dx, y + dy, color)
+            }
+        }
+    }
+
     draw(pieces, hexes) {
         let { ctx } = this
         let { boardChunks, mask, structures } = media
@@ -67,30 +116,20 @@ export default class CanvasBoardHelper {
         let done = false
         hexes.forEach((row, ri) => {
             row.forEach((hex, i) => {
-                let { structureColor, structureType, yesMarkers, noMarker, position, chunkCoords } = hex
-                
-                // let dx = position.row * 
-                // let dy 
+                let { structureColor, structureType, yesMarkers, noMarker, coords } = hex
+                let { x, y } = dataHelper.getScreenPositionFromCoordinates(coords.row, coords.col)
                 
                 if (structureColor){
-                    
+                    // console.log(structureColor, structureType, {x, y})
                     let imgObject = makeImg(media.structures[`${structureType}-${structureColor}`])
                     let halfWidth = imgObject.width / 2
                     let halfHeight = imgObject.height / 2
-                    let dx = chunkCoords.col * (CHUNK_WIDTH + CHUNK_FIT_X)
-                    let dy = chunkCoords.row * (CHUNK_HEIGHT + CHUNK_FIT_Y)
 
                     // this.setTransform(w + position.row, )
-                    ctx.drawImage(imgObject, dx + position.x - halfWidth, dy + position.y - halfHeight)
+                    ctx.drawImage(imgObject, x - halfWidth, y - halfHeight)
                 }
-                
-                if (yesMarkers.length){
-                    // TODO: display disks
-                }
-                
-                if (noMarker){
-                    // TODO: display cubes
-                }
+
+                this.drawMarkers(x, y, yesMarkers, noMarker)
             })
         })
 

@@ -31,10 +31,10 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 ---
 
 `LAST`
-added functions for finding the hex row and column of a mouse position on the canvas
+markers (cubes & disks) can be placed on the board
+they display somewhat nicely so that the player can see everything on the hex
 
 `NEXT`
-place cubes and disks on the board in play mode
-(the reducer function 'placeYesMarker' needs to be looked at)
+update the menu code so that the menu only displays options that are legal in the game
 
 

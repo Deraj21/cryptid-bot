@@ -20,6 +20,7 @@ export default function Canvas(props) {
         if (canvasRef.current){
             let canvasHelper = new CanvasBoardHelper(canvasRef.current)
             canvasHelper.draw([...mapChunks], [...hexes])
+            // console.log(hexes)
             canvasHelper.drawMask(maskPosition.x, maskPosition.y)
         }
     }, [hexes, maskPosition])

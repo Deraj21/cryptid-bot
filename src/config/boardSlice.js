@@ -183,7 +183,6 @@ export const boardSlice = createSlice({
             s.hexes = a.payload
         },
         placeYesMarker: (s, a) => {
-            // TODO: currently erroring
             let { row, col, color } = a.payload
             let oldMarkersList = s.hexes[row][col].yesMarkers
             oldMarkersList.push(color)
@@ -191,6 +190,7 @@ export const boardSlice = createSlice({
         },
         placeNoMarker: (s, a) => {
             let { row, col, color } = a.payload
+            s.hexes[row][col].noMarker = color
         },
         setCurrentHex: (s, a) => {
             s.currentHex.row = a.payload.row
