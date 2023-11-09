@@ -1,28 +1,21 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Menu, MenuItem } from '@mui/material';
 import { NestedMenuItem } from 'mui-nested-menu';
-import { placeNoMarker, placeYesMarker, setHexData, setMapChunks } from "../config/boardSlice";
-import { dummyHexes, dummyMapPeices } from "../data/dummyData"
+import { placeNoMarker, placeYesMarker } from "../config/boardSlice";
 
-import CanvasBoardHelper from "../utils/CanvasBoardHelper";
-import dataHelper from "../utils/data"
 import Canvas from "./Canvas";
 
 const canvasId = "cryptid-board-canvas"
 
 export default function PlayingBoard() {
-    "use strict";
 
     const dispatch = useDispatch()
 
     let hexes = useSelector(s => s.board.hexes)
-    let peices = useSelector(s => s.board.mapChunks)
     let players = useSelector(s => s.board.players)
     let currentHex = useSelector(s => s.board.currentHex)
 
-    // const [canvasHelper, setCanvasHelper] = useState(null)
-    const [redrawTrigger, redraw] = useState(false)
     const [menuAnchor, setMenuAnchor] = useState(null)
     
     const menuIsOpen = menuAnchor !== null

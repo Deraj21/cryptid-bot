@@ -21,7 +21,7 @@ const distanceBetweenPoints = (x1, y1, x2, y2) => {
     return Math.sqrt(dx * dx + dy * dy)
 }
 
-export default {
+const data = {
     CHUNK_WIDTH,
     CHUNK_HEIGHT,
     HEX_HEIGHT,
@@ -58,7 +58,7 @@ export default {
         let yIndex = hexCenterY.findIndex(yValue => yValue === y)
 
         let up
-        if (isEven(xIndex) && isEven(yIndex) || !isEven(xIndex) && !isEven(yIndex)) {
+        if ((isEven(xIndex) && isEven(yIndex)) || (!isEven(xIndex) && !isEven(yIndex))) {
             up = false
         } else {
             up = true
@@ -183,3 +183,5 @@ export default {
         return hexes
     }
 }
+
+export default data

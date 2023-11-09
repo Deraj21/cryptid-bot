@@ -1,8 +1,6 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 
 import dataHelper from "../utils/data"
-import { dummyHexes } from "../data/dummyData";
-import { dummyMapPeices } from "../data/dummyData";
 
 // structure images
 import p1 from "../media/structures/p1.png"
@@ -201,7 +199,7 @@ export const boardSlice = createSlice({
             // filter map chunks if it's already been placed
             let unplacedChunks = s.mapChunks.filter(chunk => {
                 if (chunk.placed !== null) {
-                    let i = availableSlots.findIndex(slot => slot == chunk.placed)
+                    let i = availableSlots.findIndex(slot => slot === chunk.placed)
                     availableSlots.splice(i, 1)
                     return false
                 }

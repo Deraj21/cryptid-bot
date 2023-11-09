@@ -1,7 +1,7 @@
 import media from '../utils/media.js'
 import dataHelper from "../utils/data.js"
 
-const { CHUNK_WIDTH, CHUNK_HEIGHT, MASK_WIDTH, MASK_HEIGHT, STRUCTURE_WIDTH, STRUCTURE_HEIGHT, CHUNK_FIT_X, CHUNK_FIT_Y, HEX_HEIGHT, HEX_WIDTH } = dataHelper
+const { CHUNK_WIDTH, CHUNK_HEIGHT, CHUNK_FIT_X, CHUNK_FIT_Y, HEX_WIDTH } = dataHelper
 
 function makeImg(src) {
     let i = new Image()
@@ -95,7 +95,6 @@ export default class CanvasBoardHelper {
 
     draw(pieces, hexes) {
         let { ctx } = this
-        let { boardChunks, mask, structures } = media
         ctx.reset()
         
         // draw board peices
@@ -113,9 +112,8 @@ export default class CanvasBoardHelper {
                 ctx.restore()
             })
         
-        let done = false
-        hexes.forEach((row, ri) => {
-            row.forEach((hex, i) => {
+        hexes.forEach(row => {
+            row.forEach(hex => {
                 let { structureColor, structureType, yesMarkers, noMarker, coords } = hex
                 let { x, y } = dataHelper.getScreenPositionFromCoordinates(coords.row, coords.col)
                 
@@ -132,32 +130,6 @@ export default class CanvasBoardHelper {
                 this.drawMarkers(x, y, yesMarkers, noMarker)
             })
         })
-
-        const exampleHex = {
-            "coords": {
-                "row": 0,
-                "col": 1
-            },
-            "terrainType": "water",
-            "animalTerritory": "none",
-            "noMarker": "",
-            "yesMarkers": [],
-            "structureColor": "white",
-            "structureType": "as",
-            "position": {
-                "x": 65.78,
-                "y": 45.71
-            }
-        }
-
-        const examplePeice = {
-            "id": 1,
-            "placed": 5,
-            "rotated": false,
-            "image": "/static/media/1.ea9d3e8c8d14a0bcdb6c.png"
-        }
-
-
     }
 
     printBoard(hexes) {

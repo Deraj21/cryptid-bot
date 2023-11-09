@@ -5,7 +5,6 @@ import dataHelper from "../utils/data";
 import { setCurrentHex } from "../config/boardSlice";
 
 export default function Canvas(props) {
-    "use strict";
 
     const dispatch = useDispatch()
 
@@ -23,7 +22,7 @@ export default function Canvas(props) {
             // console.log(hexes)
             canvasHelper.drawMask(maskPosition.x, maskPosition.y)
         }
-    }, [hexes, maskPosition])
+    }, [hexes, maskPosition, mapChunks])
 
     const handleMouseMove = (e) => {
         var rect = canvasRef.current.getBoundingClientRect()
