@@ -28,23 +28,28 @@ export const boardSlice = createSlice({
         players: {
             red: {
                 name: "Red",
-                type: "" // 'player' | 'bot'
+                type: "", // 'player' | 'bot'
+                clueNumber: ""
             },
             teal: {
                 name: "Teal",
-                type: ""
+                type: "",
+                clueNumber: ""
             },
             orange: {
                 name: "Orange",
-                type: ""
+                type: "",
+                clueNumber: ""
             },
             purple: {
                 name: "Purple",
-                type: ""
+                type: "",
+                clueNumber: ""
             },
             blue: {
                 name: "Light Blue",
-                type: ""
+                type: "",
+                clueNumber: ""
             }
         },
         structures: [
@@ -133,6 +138,12 @@ export const boardSlice = createSlice({
     reducers: {
         updatePlayer: (state, action) => {
             state.players[action.payload.key].type = action.payload.type
+            if (action.payload.type !== "bot"){
+                state.players[action.payload.key].clueNumber = ""
+            }
+        },
+        updateClue: (s, a) => {
+            s.players[a.payload.key].clueNumber = a.payload.clueNumber
         },
         slotDraggingChunk: (s, a) => {
             s.mapChunks[s.draggingChunk].placed = a.payload
@@ -232,7 +243,7 @@ export const boardSlice = createSlice({
     }
 })
 
-export const { updatePlayer, slotDraggingChunk, setMapChunks, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, placeYesMarker, placeNoMarker, setCurrentHex, randomizeBoard } = boardSlice.actions
+export const { updatePlayer, updateClue, slotDraggingChunk, setMapChunks, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, placeYesMarker, placeNoMarker, setCurrentHex, randomizeBoard } = boardSlice.actions
 
 export default boardSlice.reducer
 

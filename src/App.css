@@ -122,25 +122,10 @@ a {
 .SetupPage .player-setup {
   margin-left: 10px;
 }
-.SetupPage .select-block {
+.SetupPage .player-select-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin: 5px;
-  width: 170px;
-}
-.SetupPage .select-block select, .SetupPage .select-block option {
-  background-color: lightgray;
-  color: dimgray;
-  padding: 5px 10px;
-}
-.SetupPage .select-block .player {
-  background-color: #79C7C2;
-  color: black;
-}
-.SetupPage .select-block .bot {
-  background-color: #DBE388;
-  color: black;
+  width: 420px;
 }
 
 .BoardSetup .placement-container {
