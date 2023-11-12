@@ -1,6 +1,6 @@
 // import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePlayer, updateIsAdvancedMode, updateClue } from "../config/boardSlice";
+import { updatePlayer, updateIsAdvancedMode, updateClue, randomizePlayers } from "../config/boardSlice";
 
 import { InputLabel, Select, MenuItem, Switch, FormControl, FormControlLabel, Stack, TextField } from "@mui/material";
 
@@ -66,7 +66,12 @@ function PlayersSetup() {
         )
     }
 
+    const randomizePlayersButtonClick = e => {
+        dispatch(randomizePlayers())
+    }
+
     return <div className="player-setup">
+        <button onClick={randomizePlayersButtonClick}>randomizePlayers</button>
 
         <Stack spacing={1}>
             { playerSelects }

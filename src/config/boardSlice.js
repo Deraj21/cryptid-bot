@@ -239,11 +239,17 @@ export const boardSlice = createSlice({
             })
 
             s.donePlacingStructures = true
+        },
+        randomizePlayers: (s, a) => {
+            for (let key in s.players){
+                let player = s.players[key]
+                player.type = (key === "purple") ? "bot" : "player"
+            }
         }
     }
 })
 
-export const { updatePlayer, updateClue, slotDraggingChunk, setMapChunks, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, placeYesMarker, placeNoMarker, setCurrentHex, randomizeBoard } = boardSlice.actions
+export const { updatePlayer, updateClue, slotDraggingChunk, setMapChunks, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, placeYesMarker, placeNoMarker, setCurrentHex, randomizeBoard, randomizePlayers } = boardSlice.actions
 
 export default boardSlice.reducer
 
