@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Menu, MenuItem } from '@mui/material';
 import { NestedMenuItem } from 'mui-nested-menu';
-import { placeNoMarker, placeYesMarker } from "../config/boardSlice";
 
+import { placeNoMarker, placeYesMarker } from "../config/boardSlice";
+import BotLogic from "../utils/BotLogic";
 import Canvas from "./Canvas";
 
 const canvasId = "cryptid-board-canvas"
@@ -13,16 +14,17 @@ export default function PlayingBoard() {
     const dispatch = useDispatch()
 
     let hexes = useSelector(s => s.board.hexes)
-    let players = useSelector(s => s.board.players)
+    let players = useSelector(s => s.player.players)
+    let botClues = useSelector(s => s.player.botClues)
     let currentHex = useSelector(s => s.board.currentHex)
 
     const [menuAnchor, setMenuAnchor] = useState(null)
     
     const menuIsOpen = menuAnchor !== null
 
-    let activePlayers = []
+    let playerColors = []
     for (let key in players){
-        activePlayers.push({
+        playerColors.push({
             id: key,
             ...players[key]
         })
@@ -53,6 +55,8 @@ export default function PlayingBoard() {
             dispatch(placeYesMarker({row, col, color}))
         } else if (parentMenuId === "cube" && !hexes[row][col].noMarker) {
             dispatch(placeNoMarker({row, col, color}))
+        } else if (parentMenuId === "bot") {
+            BotLogic.askAboutHex(row, col, hexes, botClues[color])
         }
 
         handleClose()
@@ -65,15 +69,23 @@ export default function PlayingBoard() {
     }
 
     const getColorMenuItems = (parentMenuId) => {
-        return activePlayers.map(player => {
-            return (
-                <MenuItem key={player.name}
-                    onClick={(e) => handleColorClick(e, player.name, parentMenuId)}
-                >
-                    {player.name}
-                </MenuItem>
-            )
-        })
+        return playerColors
+            .filter(playerColor => {
+                if (parentMenuId === "bot") {
+                    return playerColor.type === "bot"
+                } else {
+                    return playerColor.type === "player"
+                }
+            })
+            .map(player => {
+                return (
+                    <MenuItem key={player.name}
+                        onClick={(e) => handleColorClick(e, player.id, parentMenuId)}
+                    >
+                        {player.name}
+                    </MenuItem>
+                )
+            })
     }
     
 
@@ -106,7 +118,11 @@ export default function PlayingBoard() {
                 >
                     { getColorMenuItems("disk") }
                 </NestedMenuItem>
-                <MenuItem onClick={handleAskBotClick} >Ask Bot</MenuItem>
+                <NestedMenuItem label="Ask Bot"
+                    parentMenuOpen={menuIsOpen}
+                >
+                    { getColorMenuItems("bot") }
+                </NestedMenuItem>
             </Menu>
         </div>
     )

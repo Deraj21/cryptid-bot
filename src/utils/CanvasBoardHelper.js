@@ -2,6 +2,13 @@ import media from '../utils/media.js'
 import dataHelper from "../utils/data.js"
 
 const { CHUNK_WIDTH, CHUNK_HEIGHT, CHUNK_FIT_X, CHUNK_FIT_Y, HEX_WIDTH } = dataHelper
+const COLORS = {
+    red: "OrangeRed",
+    teal: "LightSeaGreen",
+    orange: "Orange",
+    purple: "MediumOrchid",
+    blue: "LightBlue"
+}
 
 function makeImg(src) {
     let i = new Image()
@@ -45,11 +52,10 @@ export default class CanvasBoardHelper {
     }
 
     drawDisk(x, y, color) {
-        console.log("draw disk", color);
         let { ctx } = this
         let radius = 5
 
-        ctx.fillStyle = color.replaceAll(" ", "")
+        ctx.fillStyle = COLORS[color]
         ctx.strokeStyle = "white"
         ctx.beginPath()
         ctx.arc(x, y, radius, 0, Math.PI * 2)
@@ -59,12 +65,11 @@ export default class CanvasBoardHelper {
     }
 
     drawCube(x, y, color) {
-        console.log("draw cube", color);
         let {ctx} = this
         let side = 10
         let half = side / 2
 
-        ctx.fillStyle = color.replaceAll(" ", "")
+        ctx.fillStyle = COLORS[color]
         ctx.strokeStyle = "white"
         ctx.fillRect(x - half, y - half, side, side)
         ctx.strokeRect(x - half, y - half, side, side)
@@ -76,15 +81,11 @@ export default class CanvasBoardHelper {
         let radius = HEX_WIDTH / 1.7
         let angle = Math.PI * 2 / markerCount
 
-        if (markerCount)
-            console.log(markerCount, yesMarkers, noMarker)
-        
         for (let i = 0; i < markerCount; i++){
             let dx = radius * Math.cos(angle * i)
             let dy = radius * Math.sin(angle * i)
 
             let color = yesMarkers[i]
-            console.log(color)
             if (!color){
                 this.drawCube(x + dx, y + dy, noMarker)
             } else {

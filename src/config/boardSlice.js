@@ -25,33 +25,6 @@ const flipCoin = () => !!Math.floor(Math.random() * 2)
 export const boardSlice = createSlice({
     name: 'board',
     initialState: {
-        players: {
-            red: {
-                name: "Red",
-                type: "", // 'player' | 'bot'
-                clueNumber: ""
-            },
-            teal: {
-                name: "Teal",
-                type: "",
-                clueNumber: ""
-            },
-            orange: {
-                name: "Orange",
-                type: "",
-                clueNumber: ""
-            },
-            purple: {
-                name: "Purple",
-                type: "",
-                clueNumber: ""
-            },
-            blue: {
-                name: "Light Blue",
-                type: "",
-                clueNumber: ""
-            }
-        },
         structures: [
             {
                 id: "as-white",
@@ -136,15 +109,6 @@ export const boardSlice = createSlice({
         currentHex: {row: null, col: null}
     },
     reducers: {
-        updatePlayer: (state, action) => {
-            state.players[action.payload.key].type = action.payload.type
-            if (action.payload.type !== "bot"){
-                state.players[action.payload.key].clueNumber = ""
-            }
-        },
-        updateClue: (s, a) => {
-            s.players[a.payload.key].clueNumber = a.payload.clueNumber
-        },
         slotDraggingChunk: (s, a) => {
             s.mapChunks[s.draggingChunk].placed = a.payload
             s.draggingChunk = null
@@ -239,17 +203,11 @@ export const boardSlice = createSlice({
             })
 
             s.donePlacingStructures = true
-        },
-        randomizePlayers: (s, a) => {
-            for (let key in s.players){
-                let player = s.players[key]
-                player.type = (key === "purple") ? "bot" : "player"
-            }
         }
     }
 })
 
-export const { updatePlayer, updateClue, slotDraggingChunk, setMapChunks, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, placeYesMarker, placeNoMarker, setCurrentHex, randomizeBoard, randomizePlayers } = boardSlice.actions
+export const { slotDraggingChunk, setMapChunks, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, placeYesMarker, placeNoMarker, setCurrentHex, randomizeBoard, } = boardSlice.actions
 
 export default boardSlice.reducer
 

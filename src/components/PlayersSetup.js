@@ -1,6 +1,7 @@
 // import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePlayer, updateIsAdvancedMode, updateClue, randomizePlayers } from "../config/boardSlice";
+import { updateIsAdvancedMode } from "../config/boardSlice";
+import { updatePlayer, updateClue, randomizePlayers } from "../config/playerSlice";
 
 import { InputLabel, Select, MenuItem, Switch, FormControl, FormControlLabel, Stack, TextField } from "@mui/material";
 
@@ -8,7 +9,7 @@ import { InputLabel, Select, MenuItem, Switch, FormControl, FormControlLabel, St
 function PlayersSetup() {
 
     const dispatch = useDispatch()
-    const players = useSelector(s => s.board.players)
+    const players = useSelector(s => s.player.players)
     const isAdvancedMode = useSelector(s => s.board.isAdvancedMode)
 
     const playerSelectChange = (key) => {
@@ -71,7 +72,7 @@ function PlayersSetup() {
     }
 
     return <div className="player-setup">
-        <button onClick={randomizePlayersButtonClick}>randomizePlayers</button>
+        <button onClick={randomizePlayersButtonClick}>Randomize Players</button>
 
         <Stack spacing={1}>
             { playerSelects }

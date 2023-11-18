@@ -11,6 +11,8 @@ export default function Canvas(props) {
     let hexes = useSelector(s => s.board.hexes)
     let mapChunks = useSelector(s => s.board.mapChunks)
 
+    // console.log(hexes)
+
     let [maskPosition, setMaskPosition] = useState({x: 0, y: 0})
 
     const canvasRef = useRef(null)

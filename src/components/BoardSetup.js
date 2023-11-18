@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 import { slotDraggingChunk, updateDraggingChunk, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, randomizeBoard } from "../config/boardSlice"
+import { setClues } from "../config/playerSlice"
+
 import MapChunk from "./MapChunk"
 import Ruler from "./Ruler"
 import dataHelper from "../utils/data"
@@ -14,6 +16,7 @@ export default function BoardSetup() {
         structures = useSelector(s => s.board.structures),
         donePlacingChunks = useSelector(s => s.board.donePlacingChunks)
     let mapChunks = useSelector(s => s.board.mapChunks)
+    let players = useSelector(s => s.player.players)
 
     // react-router
     let navigate = useNavigate()
@@ -111,6 +114,7 @@ export default function BoardSetup() {
                                 let hexes = dataHelper.convertSetupToPlay(chunksCopy, structuresCopy)
                                 
                                 dispatch(setHexData(hexes))
+                                dispatch(setClues(players))
                                 navigate("/play")
                             } else {
                                 dispatch(finishPlacingChunks())

@@ -31,10 +31,12 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 ---
 
 `LAST`
-markers (cubes & disks) can be placed on the board
-they display somewhat nicely so that the player can see everything on the hex
+- split out players / bots redux logic into a new reducer/slice
 
 `NEXT`
-update the menu code so that the menu only displays options that are legal in the game
+- hex distance algorithm
+- figure out best way to have the bot figure out it's answer
+- write code
+- display
 
 

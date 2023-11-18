@@ -1,4 +1,9 @@
 import cryptidMapData from "../data/cryptid-map-data"
+import purpleClues from "../data/purple-clues.json"
+
+const CLUES = {
+    purple: purpleClues
+}
 
 const CHUNK_WIDTH = 250,
     CHUNK_HEIGHT = 160,
@@ -10,6 +15,15 @@ const CHUNK_WIDTH = 250,
     STRUCTURE_HEIGHT = 24,
     CHUNK_FIT_X = -14,
     CHUNK_FIT_Y = -22
+
+const terrains = ["water", "desert", "swamp", "mountain", "forest"]
+const numbers = ["one", "two", "three"]
+const Properties = {
+    terrain: "terrainType",
+    territory: "animalTerritory",
+    structureColor: "structureColor",
+    structureType: "structureType"
+}
 
 
 const isEven = n => n % 2 === 0
@@ -181,6 +195,68 @@ const data = {
         })
 
         return hexes
+    },
+    parseClue: function(clueColor, clueId) {
+        let clueText = CLUES[clueColor].find(c => c.id === clueId).text
+        let clueInfo = {}
+        numbers.forEach((n, i) => clueText = clueText.replaceAll(n, i + 1))
+        let words = clueText.split(" ")
+    
+        // check if is negative'
+        if (words[0] === "not") {
+            clueInfo.isNegative = true
+            words.splice(0, 1)
+        } else {
+            clueInfo.isNegative = false
+        }
+    
+        // get spaces away
+        if (words[0] === "on") {
+            clueInfo.spacesAway = 0
+            words.splice(0, 1)
+        } else if (words[0] === "within") {
+            clueInfo.spacesAway = parseInt(words[1])
+            words.splice(0, 4)
+        }
+    
+        // terrain
+        if (terrains.includes(words[0])) {
+            clueInfo.property = Properties.terrain
+            clueInfo.values = [words[0]]
+            if (words.length > 1) {
+                clueInfo.values.push(words[2])
+            }
+            return clueInfo
+        }
+    
+        // structure color
+        if (words.includes("structure")) {
+            clueInfo.property = Properties.structureColor
+            clueInfo.values = [words[1]]
+            return clueInfo
+        }
+    
+        // let ending = words.join(" ")
+    
+        // animal territory
+        if (words.includes("territory")) {
+            clueInfo.property = Properties.territory
+            clueInfo.values = (words[0] === "either") ? ["bear", "cougar"] : [words[0]]
+            return clueInfo
+        }
+    
+        // structure type
+        clueInfo.property = Properties.structureType
+        clueInfo.values = words.includes("standing") ? ["ss"] : ["as"]
+    
+        return clueInfo
+    
+        // const example = { // "not within one space of either animal territory"
+        //     isNegative: true,
+        //     spacesAway: 1,
+        //     property: "territory",
+        //     values: ["bear", "cougar"]
+        // }
     }
 }
 
