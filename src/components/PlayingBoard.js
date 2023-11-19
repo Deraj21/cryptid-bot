@@ -56,7 +56,13 @@ export default function PlayingBoard() {
         } else if (parentMenuId === "cube" && !hexes[row][col].noMarker) {
             dispatch(placeNoMarker({row, col, color}))
         } else if (parentMenuId === "bot") {
-            BotLogic.askAboutHex(row, col, hexes, botClues[color])
+            // console.log(botClues[color])
+            let answer = BotLogic.askAboutHex(row, col, hexes, botClues[color])
+            if (answer) {
+                dispatch(placeYesMarker({row, col, color}))
+            } else {
+                dispatch(placeNoMarker({row, col, color}))
+            }
         }
 
         handleClose()

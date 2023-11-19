@@ -18,7 +18,6 @@ function PlayersSetup() {
 
     const botClueChange = (key) => {
         return e => {
-            console.log(e.target.value)
             dispatch(updateClue({key, clueNumber: e.target.value}))
         }
     }

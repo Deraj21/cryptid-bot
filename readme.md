@@ -31,12 +31,9 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 ---
 
 `LAST`
-- split out players / bots redux logic into a new reducer/slice
+- ask bot about a hex working!!!!
 
 `NEXT`
-- hex distance algorithm
-- figure out best way to have the bot figure out it's answer
-- write code
-- display
+- menu items shouldn't display illegal options
 
 

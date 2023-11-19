@@ -41,7 +41,7 @@ export default function Canvas(props) {
         let x = e.clientX - rect.left
         let y =  e.clientY - rect.top
         let {row, col} = dataHelper.getCoordinatesFromScreenPosition(x, y)
-        let hexCollection = BotLogic.findHexesWithinDistance(row, col, 1)
+        let hexCollection = BotLogic.findHexesWithinDistance(row, col, 3)
         let canvasHelper = new CanvasBoardHelper(canvasRef.current)
 
         hexCollection.forEach(hex => {
