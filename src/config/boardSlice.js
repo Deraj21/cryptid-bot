@@ -166,8 +166,14 @@ export const boardSlice = createSlice({
             s.hexes[row][col].noMarker = color
         },
         setCurrentHex: (s, a) => {
-            s.currentHex.row = a.payload.row
-            s.currentHex.col = a.payload.col
+            let newRow = Math.min(a.payload.row, 8)
+            newRow = Math.max(newRow, 0)
+
+            let newCol = Math.min(a.payload.col, 11)
+            newCol = Math.max(newCol, 0)
+
+            s.currentHex.row = newRow
+            s.currentHex.col = newCol
         },
         randomizeBoard: (s, a) => {
             let availableSlots = [0, 1, 2, 3, 4, 5]

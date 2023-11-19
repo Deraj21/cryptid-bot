@@ -16,18 +16,23 @@ export default function PlayingBoard() {
     let hexes = useSelector(s => s.board.hexes)
     let players = useSelector(s => s.player.players)
     let botClues = useSelector(s => s.player.botClues)
-    let currentHex = useSelector(s => s.board.currentHex)
+    let currentCoords = useSelector(s => s.board.currentHex)
 
     const [menuAnchor, setMenuAnchor] = useState(null)
-    
+
     const menuIsOpen = menuAnchor !== null
 
     let playerColors = []
-    for (let key in players){
+    for (let key in players) {
         playerColors.push({
             id: key,
             ...players[key]
         })
+    }
+
+    let currentHex = {}
+    if (hexes.length && currentCoords.row) {
+        currentHex = hexes[currentCoords.row][currentCoords.col]
     }
 
     const h = 600
@@ -40,7 +45,11 @@ export default function PlayingBoard() {
             mouseY: e.clientY
         }
 
-        setMenuAnchor( !menuIsOpen ? mousePosition : null )
+        if (currentHex.noMarker) {
+            return
+        }
+
+        setMenuAnchor(!menuIsOpen ? mousePosition : null)
     }
 
     const handleClose = (e) => {
@@ -48,40 +57,40 @@ export default function PlayingBoard() {
     }
 
     const handleColorClick = (e, color, parentMenuId) => {
-        let {row, col} = currentHex
+        let { row, col } = currentCoords
 
-        // TODO: do stuff
         if (parentMenuId === "disk") {
-            dispatch(placeYesMarker({row, col, color}))
-        } else if (parentMenuId === "cube" && !hexes[row][col].noMarker) {
-            dispatch(placeNoMarker({row, col, color}))
-        } else if (parentMenuId === "bot") {
-            // console.log(botClues[color])
+            dispatch(placeYesMarker({ row, col, color }))
+        } else if (parentMenuId === "cube" && !currentHex.noMarker) {
+            dispatch(placeNoMarker({ row, col, color }))
+        } else if (parentMenuId === "bot" && !currentHex.noMarker) {
             let answer = BotLogic.askAboutHex(row, col, hexes, botClues[color])
             if (answer) {
-                dispatch(placeYesMarker({row, col, color}))
+                dispatch(placeYesMarker({ row, col, color }))
             } else {
-                dispatch(placeNoMarker({row, col, color}))
+                dispatch(placeNoMarker({ row, col, color }))
             }
         }
 
         handleClose()
     }
 
-    const handleAskBotClick = () => {
-        console.log("ask bot");
-        // TODO: do stuff
-        handleClose()
-    }
-
     const getColorMenuItems = (parentMenuId) => {
         return playerColors
             .filter(playerColor => {
+                if (!currentCoords.row) {
+                    return true
+                }
+
+                if (currentHex.yesMarkers.includes(playerColor.id)) {
+                    return false
+                }
+
                 if (parentMenuId === "bot") {
                     return playerColor.type === "bot"
-                } else {
-                    return playerColor.type === "player"
                 }
+
+                return playerColor.type === "player"
             })
             .map(player => {
                 return (
@@ -93,7 +102,10 @@ export default function PlayingBoard() {
                 )
             })
     }
-    
+
+    let cubeMenuItems = getColorMenuItems("cube")
+    let diskMenuItems = getColorMenuItems("disk")
+    let botMenuItems = getColorMenuItems("bot")
 
     return (
         <div className="PlayingBoard">
@@ -109,26 +121,44 @@ export default function PlayingBoard() {
                 anchorReference="anchorPosition"
                 anchorPosition={
                     menuIsOpen
-                    ? { top: menuAnchor.mouseY, left: menuAnchor.mouseX }
-                    : undefined
+                        ? { top: menuAnchor.mouseY, left: menuAnchor.mouseX }
+                        : undefined
                 }
             >
-                <NestedMenuItem label="Place Cube"
-                    parentMenuOpen={menuIsOpen}
-                >
-                    { getColorMenuItems("cube") }
-                </NestedMenuItem>
+                {
+                    cubeMenuItems.length
+                    ?
+                    <NestedMenuItem label="Place Cube"
+                        parentMenuOpen={menuIsOpen}
+                    >
+                        {cubeMenuItems}
+                    </NestedMenuItem>
+                    :
+                    ''
+                }
+                {
+                    diskMenuItems.length
+                    ?
+                    <NestedMenuItem label="Place Disk"
+                        parentMenuOpen={menuIsOpen}
+                    >
+                        {diskMenuItems}
+                    </NestedMenuItem>
+                    :
+                    ''
+                }
+                {
+                    botMenuItems.length
+                    ?
+                    <NestedMenuItem label="Ask Bot"
+                        parentMenuOpen={menuIsOpen}
+                    >
+                        {botMenuItems}
+                    </NestedMenuItem>
+                    :
+                    ''
+                }
 
-                <NestedMenuItem label="Place Disk"
-                    parentMenuOpen={menuIsOpen}
-                >
-                    { getColorMenuItems("disk") }
-                </NestedMenuItem>
-                <NestedMenuItem label="Ask Bot"
-                    parentMenuOpen={menuIsOpen}
-                >
-                    { getColorMenuItems("bot") }
-                </NestedMenuItem>
             </Menu>
         </div>
     )

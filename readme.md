@@ -31,9 +31,13 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 ---
 
 `LAST`
-- ask bot about a hex working!!!!
+- menu items only display what is legal
+  - bot cannot asked about a hex they already played on
+  - players cannot play on a hex they already played on
+  - no one can play on a hex that has a "no" marker on it
 
 `NEXT`
-- menu items shouldn't display illegal options
+- bug fixes
+- TESTING
 
 
