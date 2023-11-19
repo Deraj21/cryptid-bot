@@ -14,7 +14,9 @@ const CHUNK_WIDTH = 250,
     STRUCTURE_WIDTH = 24,
     STRUCTURE_HEIGHT = 24,
     CHUNK_FIT_X = -14,
-    CHUNK_FIT_Y = -22
+    CHUNK_FIT_Y = -22,
+    NUM_COLS = 12,
+    NUM_ROWS = 9
 
 const terrains = ["water", "desert", "swamp", "mountain", "forest"]
 const numbers = ["one", "two", "three"]
@@ -46,6 +48,8 @@ const data = {
     STRUCTURE_HEIGHT,
     CHUNK_FIT_X,
     CHUNK_FIT_Y,
+    NUM_COLS,
+    NUM_ROWS,
 
     getStructureData: function () {
         const structureData = []

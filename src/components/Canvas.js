@@ -3,6 +3,7 @@ import CanvasBoardHelper from "../utils/CanvasBoardHelper";
 import { useDispatch, useSelector } from "react-redux";
 import dataHelper from "../utils/data";
 import { setCurrentHex } from "../config/boardSlice";
+import BotLogic from "../utils/BotLogic";
 
 export default function Canvas(props) {
 
@@ -39,11 +40,15 @@ export default function Canvas(props) {
         var rect = canvasRef.current.getBoundingClientRect()
         let x = e.clientX - rect.left
         let y =  e.clientY - rect.top
-        let hexCenterPoint = dataHelper.getClosestCenterpoint(x, y)
-
+        let {row, col} = dataHelper.getCoordinatesFromScreenPosition(x, y)
+        let hexCollection = BotLogic.findHexesWithinDistance(row, col, 1)
         let canvasHelper = new CanvasBoardHelper(canvasRef.current)
-        canvasHelper.drawPoint(x, y, "yellow")
-        canvasHelper.drawPoint(hexCenterPoint.x, hexCenterPoint.y)
+
+        hexCollection.forEach(hex => {
+            let position = dataHelper.getScreenPositionFromCoordinates(hex.row, hex.col)
+
+            canvasHelper.drawPoint(position.x, position.y, "red")
+        })
     }
 
     return <canvas ref={canvasRef}
