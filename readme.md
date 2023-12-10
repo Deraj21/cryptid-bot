@@ -31,13 +31,11 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 ---
 
 `LAST`
-- menu items only display what is legal
-  - bot cannot asked about a hex they already played on
-  - players cannot play on a hex they already played on
-  - no one can play on a hex that has a "no" marker on it
+- clue input validation
+- fixed bug: white abandoned shack not showing up
+- copied clue data
 
 `NEXT`
-- bug fixes
-- TESTING
+- finish converting all the clue data into json
 
 

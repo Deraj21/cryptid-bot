@@ -51,6 +51,14 @@ const data = {
     NUM_COLS,
     NUM_ROWS,
 
+    randomFromList: function(list) {
+        // TODO untested
+        let index = Math.floor(Math.random() * (list.length - 1) )
+        return index
+    },
+    randomIntBetween: function (min, max) {
+        return Math.floor( Math.random() * (max - min + 1) ) + min
+    },
     getStructureData: function () {
         const structureData = []
         return structureData
@@ -172,7 +180,7 @@ const data = {
                 hex.structureType = ""
 
                 // find if there's a structure there (stop looking once passed current chunk or position)
-                structs.filter(s => !!s.chunkId).forEach(struct => {
+                structs.filter(s => s.chunkId !== null).forEach(struct => {
                     let structRow = rotated ? numRows - 1 - struct.coords.row : struct.coords.row
                     let structCol = rotated ? numCols - 1 - struct.coords.col : struct.coords.col
                     if (id === struct.chunkId && row === structRow && col === structCol) {

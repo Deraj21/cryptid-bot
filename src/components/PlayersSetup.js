@@ -18,7 +18,9 @@ function PlayersSetup() {
 
     const botClueChange = (key) => {
         return e => {
-            dispatch(updateClue({key, clueNumber: e.target.value}))
+            let hasDigits = /[0-9].*/.test(e.target.value)
+            let value = hasDigits ? parseInt(e.target.value) : ""
+            dispatch(updateClue({key, clueNumber: value }))
         }
     }
 

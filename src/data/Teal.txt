@@ -1,0 +1,96 @@
+1 on desert or swamp
+2 within two spaces of cougar territory
+3 within three spaces of a blue structure
+4 not on forest or swamp
+5 within three spaces of a green structure
+6 within one space of desert
+7 not on desert or swamp
+8 on forest or swamp
+9 not on water or swamp
+10 not within three spaces of a black structure
+11 within two spaces of an abandoned shack
+12 not within one space of desert
+13 on forest or water
+14 not within three spaces of a white structure
+15 not within one space of either animal territory
+16 within two spaces of bear territory
+17 within one space of water
+18 not on swamp or mountain
+19 within one space of mountain
+20 not within three spaces of a black structure
+21 not within one space of swamp
+22 within three spaces of a black structure
+23 not within three spaces of a green structure
+24 not on forest or desert
+25 within one space of swamp
+26 not on forest or mountain
+27 not within two spaces of bear territory
+28 on forest or mountain
+29 on swamp or mountain
+30 not within two spaces of cougar territory
+31 not within two spaces of a standing stone
+32 on water or swamp
+33 on desert or water
+34 within three spaces of a blue structure
+35 within two spaces of a standing stone
+36 on water or mountains
+37 not on forest or swamp
+38 not on water or swamp
+39 not within two spaces of an abandoned shack
+40 not within one space of mountain
+41 not on desert or mountain
+42 within one space of forest
+43 within two spaces of bear territory
+44 not within one space of either animal territory
+45 within three spaces of a green structure
+46 within one space of either animal territory
+47 on desert or mountain
+48 not within two spaces of bear territory
+49 within one space of mountain
+73 on desert or swamp
+50 not on desert or water
+51 not within one space of forest
+52 not within two spaces of an abandoned shack
+53 within two spaces of an abandoned shack
+54 within one space of swamp
+55 not within one space of desert
+56 not on desert or swamp
+57 not on desert or mountain
+58 within three spaces of a black structure
+59 not within one space of forest
+60 not within three spaces of a blue structure
+61 within one space of water
+62 on forest or water
+63 not on desert or water
+64 within three spaces of a white structure
+65 within two spaces of a standing stone
+66 within two spaces of cougar territory
+67 within one space of either animal territory
+68 not within one space of water
+69 not within three spaces of a blue structure
+70 not on forest or desert
+71 within one space of forest
+72 not on forest or mountain
+74 on water or mountains
+75 not on swamp or mountain
+76 on forest or desert
+77 on desert or water
+78 not within three spaces of a white structure
+79 within three spaces of a white structure
+80 within one space of desert
+81 not within one space of mountain
+82 on forest or desert
+83 on forest or mountain
+84 not on water or mountains
+85 not within one space of water
+86 on water or swamp
+87 not on forest or water
+88 not within two spaces of cougar territory
+89 on desert or mountain
+90 on forest or swamp
+91 not on water or mountains
+92 on swamp or mountain
+93 not on forest or water
+94 not within two spaces of a standing stone
+95 not within three spaces of a green structure
+96 not within one space of swamp

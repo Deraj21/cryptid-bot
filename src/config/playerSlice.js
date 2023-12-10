@@ -42,7 +42,13 @@ export const playerSlice = createSlice({
             }
         },
         updateClue: (s, a) => {
-            s.players[a.payload.key].clueNumber = a.payload.clueNumber
+            let number = a.payload.clueNumber
+            if (typeof number === "number") {
+                number = Math.max(1, a.payload.clueNumber)
+                number = Math.min(96, a.payload.clueNumber)
+            }
+            s.players[a.payload.key].clueNumber = number
+            
         },
         setClues: (s, a) => {
             let players = a.payload
@@ -58,6 +64,10 @@ export const playerSlice = createSlice({
             for (let key in s.players){
                 let player = s.players[key]
                 player.type = (key === "purple") ? "bot" : "player"
+
+                if (player.type === "bot") {
+                    player.clueNumber = data.randomIntBetween(0, 95)
+                }
             }
         }
     }
