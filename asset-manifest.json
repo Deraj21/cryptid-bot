@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/cryptid-bot/static/css/main.d2595496.css",
-    "main.js": "/cryptid-bot/static/js/main.16fed5df.js",
+    "main.js": "/cryptid-bot/static/js/main.485123ba.js",
     "static/media/Cryptid_house.png": "/cryptid-bot/static/media/Cryptid_house.f5592497e6d9837840ba.png",
     "static/media/Cryptid_Title.png": "/cryptid-bot/static/media/Cryptid_Title.903b4797fe6548f63264.png",
     "static/media/1.png": "/cryptid-bot/static/media/1.ea9d3e8c8d14a0bcdb6c.png",
@@ -46,10 +46,10 @@
     "static/media/roboto-greek-ext-700-normal.woff2": "/cryptid-bot/static/media/roboto-greek-ext-700-normal.bd9854c751441ccc1a70.woff2",
     "index.html": "/cryptid-bot/index.html",
     "main.d2595496.css.map": "/cryptid-bot/static/css/main.d2595496.css.map",
-    "main.16fed5df.js.map": "/cryptid-bot/static/js/main.16fed5df.js.map"
+    "main.485123ba.js.map": "/cryptid-bot/static/js/main.485123ba.js.map"
   },
   "entrypoints": [
     "static/css/main.d2595496.css",
-    "static/js/main.16fed5df.js"
+    "static/js/main.485123ba.js"
   ]
 }
