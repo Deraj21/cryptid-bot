@@ -47,7 +47,6 @@
 47 on desert or mountain
 48 not within two spaces of bear territory
 49 within one space of mountain
-73 on desert or swamp
 50 not on desert or water
 51 not within one space of forest
 52 not within two spaces of an abandoned shack
@@ -71,6 +70,7 @@
 70 not on forest or desert
 71 within one space of forest
 72 not on forest or mountain
+73 on desert or swamp
 74 on water or mountains
 75 not on swamp or mountain
 76 on forest or desert

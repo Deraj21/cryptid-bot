@@ -31,11 +31,10 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 ---
 
 `LAST`
-- clue input validation
-- fixed bug: white abandoned shack not showing up
-- copied clue data
+- data converted to json
+- tested with a real game scenario
 
 `NEXT`
-- finish converting all the clue data into json
+- deploy to github pages
 
 

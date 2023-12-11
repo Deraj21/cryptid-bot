@@ -1,7 +1,4 @@
-Orange
-THE HABITAT IS...
 1 not on swamp or mountain
-25 on swamp or mountain
 2 within two spaces of bear territory
 3 not within two spaces of cougar territory
 4 within one space of mountain
@@ -25,6 +22,7 @@ THE HABITAT IS...
 22 within three spaces of a black structure
 23 not on water or mountains
 24 on water or mountains
+25 on swamp or mountain
 26 within one space of desert
 27 on desert or swamp
 28 not on forest or desert
@@ -49,7 +47,6 @@ THE HABITAT IS...
 47 within one space of mountain
 48 not within three spaces of a white structure
 49 within two spaces of a standing stone
-73 within three spaces of a blue structure
 50 on forest or water
 51 on desert or swamp
 52 within two spaces of an abandoned shack
@@ -73,6 +70,7 @@ THE HABITAT IS...
 70 not within three spaces of a green structure
 71 not on forest or swamp
 72 within two spaces of cougar territory
+73 within three spaces of a blue structure
 74 on forest or mountain
 75 not on forest or mountain
 76 not on desert or water

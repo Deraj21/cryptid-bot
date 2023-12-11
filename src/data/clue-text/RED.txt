@@ -1,11 +1,4 @@
-
-
-
-
-Red
-THE HABITAT IS...
 1 within two spaces of bear territory
-25 on desert or water
 2 on water or mountains
 3 within one space of mountain
 4 not on water or mountains
@@ -29,6 +22,7 @@ THE HABITAT IS...
 22 not on desert or water
 23 not within two spaces of cougar territory
 24 not within two spaces of an abandoned shack
+25 on desert or water
 26 within one space of water
 27 on desert or water
 28 within one space of swamp
@@ -53,7 +47,6 @@ THE HABITAT IS...
 47 not on water or swamp
 48 within two spaces of cougar territory
 49 not within one space of either animal territory
-73 not on forest or water
 50 within one space of either animal territory
 51 not on desert or swamp
 52 within one space of mountain
@@ -77,6 +70,7 @@ THE HABITAT IS...
 70 not within two spaces of a standing stone
 71 not on water or mountains
 72 on swamp or mountain
+73 not on forest or water
 74 not within one space of forest
 75 not on forest or desert
 76 not within three spaces of a white structure

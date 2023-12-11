@@ -1,8 +1,16 @@
 import cryptidMapData from "../data/cryptid-map-data"
-import purpleClues from "../data/purple-clues.json"
+import purpleClues from "../data/clue-json/purple-clues.json"
+import tealClues from "../data/clue-json/teal-clues.json"
+import orangeClues from "../data/clue-json/orange-clues.json"
+import redClues from "../data/clue-json/red-clues.json"
+import blueClues from "../data/clue-json/light-blue-clues.json"
 
 const CLUES = {
-    purple: purpleClues
+    red: redClues,
+    teal: tealClues,
+    orange: orangeClues,
+    purple: purpleClues,
+    blue: blueClues
 }
 
 const CHUNK_WIDTH = 250,

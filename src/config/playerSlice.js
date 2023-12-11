@@ -63,7 +63,8 @@ export const playerSlice = createSlice({
         randomizePlayers: (s, a) => {
             for (let key in s.players){
                 let player = s.players[key]
-                player.type = (key === "purple") ? "bot" : "player"
+                // player.type = (key === "purple") ? "bot" : "player"
+                player.type = "bot"
 
                 if (player.type === "bot") {
                     player.clueNumber = data.randomIntBetween(0, 95)
