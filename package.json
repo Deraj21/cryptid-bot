@@ -1,6 +1,6 @@
 {
+  "homepage": "https://Deraj21.github.io/cryptid-bot",
   "name": "cryptid-bot",
-  "homepage": "https://deraj21.github.io/cryptid-bot/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
