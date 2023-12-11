@@ -1,11 +1,11 @@
 import React from 'react'
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, createHashRouter } from 'react-router-dom'
 import LandingPage from '../pages/LandingPage'
 import SetupPage from '../pages/SetupPage'
 import PlayPage from '../pages/PlayPage'
 import App from '../App'
 
-const router = createBrowserRouter([
+const router = createHashRouter([
     {
         path: '/',
         element: <App />,
