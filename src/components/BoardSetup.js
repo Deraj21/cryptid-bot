@@ -85,7 +85,7 @@ export default function BoardSetup() {
     return (
         <div className="BoardSetup">
             <h1>Setup Board</h1>
-            <button onClick={() => dispatch(randomizeBoard())} >Randomize Board</button>
+            {/* <button onClick={() => dispatch(randomizeBoard())} >Randomize Board</button> */}
             <div className="placement-container">
                 <h3>{placementLabel}</h3>
                 {

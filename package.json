@@ -1,5 +1,6 @@
 {
   "name": "cryptid-bot",
+  "homepage": "https://deraj21.github.io/cryptid-bot/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -24,6 +25,8 @@
     "start": "react-scripts start",
     "stylin": "sass --watch src/styles/App.sass src/App.css",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -44,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.0"
   }
 }
