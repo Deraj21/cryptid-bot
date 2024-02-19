@@ -15,7 +15,7 @@ export default function PlayPage() {
     return (
         <div className="PlayPage" >
             
-            <h1><Link to="/setup" >{"<"}</Link> Play</h1>
+            <h3><Link to="/setup" >{"<"}</Link> Play</h3>
             <PlayingBoard />
         </div>
     )

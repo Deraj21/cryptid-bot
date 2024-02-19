@@ -73,7 +73,7 @@ function PlayersSetup() {
     }
 
     return <div className="player-setup">
-        {/* <button onClick={randomizePlayersButtonClick}>Randomize Players</button> */}
+        <button onClick={randomizePlayersButtonClick}>Randomize Players</button>
 
         <Stack spacing={1}>
             { playerSelects }

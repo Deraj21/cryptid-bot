@@ -20,6 +20,14 @@ export default class CanvasBoardHelper {
     constructor(canvas) {
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
+        this.rect = this.canvas.getBoundingClientRect()
+    }
+
+    /**
+     * for when the screen resizes 
+     */
+    resetRect() {
+        this.rect = this.canvas.getBoundingClientRect()
     }
 
     /**
@@ -28,7 +36,7 @@ export default class CanvasBoardHelper {
      * @param {Number} y 
      * @param {Number} rotation 
      */
-    setTransform(x, y, rotation) {
+    #setTransform(x, y, rotation) {
         let { ctx } = this
 
         ctx.save()
@@ -108,7 +116,7 @@ export default class CanvasBoardHelper {
                 let w = imgObject.width / 2
                 let h = imgObject.height / 2
 
-                this.setTransform(w + dx, h + dy, peice.rotated ? Math.PI : 0)
+                this.#setTransform(w + dx, h + dy, peice.rotated ? Math.PI : 0)
                 ctx.drawImage(imgObject, -w, -h)
                 ctx.restore()
             })
@@ -124,7 +132,7 @@ export default class CanvasBoardHelper {
                     let halfWidth = imgObject.width / 2
                     let halfHeight = imgObject.height / 2
 
-                    // this.setTransform(w + position.row, )
+                    // this.#setTransform(w + position.row, )
                     ctx.drawImage(imgObject, x - halfWidth, y - halfHeight)
                 }
 

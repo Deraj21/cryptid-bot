@@ -106,7 +106,8 @@ export const boardSlice = createSlice({
         donePlacingChunks: false,
         donePlacingStructures: false,
         hexes: [],
-        currentHex: {row: null, col: null}
+        currentHex: {row: null, col: null},
+        menuAnchor: null
     },
     reducers: {
         slotDraggingChunk: (s, a) => {
@@ -175,6 +176,13 @@ export const boardSlice = createSlice({
             s.currentHex.row = newRow
             s.currentHex.col = newCol
         },
+        setMenuAnchor: (s, a) => {
+            if (a.payload == null) {
+                s.menuAnchor = null
+            } else {
+                s.menuAnchor = { ...a.payload }
+            }
+        },
         randomizeBoard: (s, a) => {
             let availableSlots = [0, 1, 2, 3, 4, 5]
             // filter map chunks if it's already been placed
@@ -213,7 +221,7 @@ export const boardSlice = createSlice({
     }
 })
 
-export const { slotDraggingChunk, setMapChunks, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, placeYesMarker, placeNoMarker, setCurrentHex, randomizeBoard, } = boardSlice.actions
+export const { slotDraggingChunk, setMapChunks, removeChunk, rotateChunk, updateDraggingChunk, updateIsAdvancedMode, placeStructure, finishPlacingChunks, finishPlacingStructures, setDraggingStructure, setHexData, placeYesMarker, placeNoMarker, setCurrentHex, setMenuAnchor, randomizeBoard, } = boardSlice.actions
 
 export default boardSlice.reducer
 

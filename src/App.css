@@ -67,11 +67,6 @@ h3 {
   padding: 7px 20px;
 }
 
-canvas {
-  background-color: #ffffff;
-  border-radius: 3px;
-}
-
 a {
   text-decoration: none;
   color: inherit;
@@ -92,7 +87,7 @@ a {
 }
 
 .App {
-  padding-bottom: 50px;
+  min-height: 100vh;
   background-color: #3D6A6D;
   background-image: url("./media/Cryptid_foliage.png");
   background-repeat: no-repeat;
@@ -118,6 +113,7 @@ a {
 
 .SetupPage {
   margin-left: 30px;
+  padding-bottom: 50px;
 }
 .SetupPage .player-setup {
   margin-left: 10px;
@@ -194,7 +190,10 @@ a {
 }
 
 .PlayingBoard {
-  margin: 20px 20px;
+  padding: 20px 20px;
+}
+.PlayingBoard canvas {
+  border: 1px dashed black;
 }
 
 /*# sourceMappingURL=App.css.map */

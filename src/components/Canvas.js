@@ -36,6 +36,7 @@ export default function Canvas(props) {
         dispatch(setCurrentHex({row, col}))
     }
     
+    // for debugging
     const handleCanvasClick = e => {
         var rect = canvasRef.current.getBoundingClientRect()
         let x = e.clientX - rect.left
