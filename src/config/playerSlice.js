@@ -16,6 +16,11 @@ export const playerSlice = createSlice({
                 type: "",
                 clueNumber: ""
             },
+            blue: {
+                name: "Light Blue",
+                type: "",
+                clueNumber: ""
+            },
             orange: {
                 name: "Orange",
                 type: "",
@@ -23,11 +28,6 @@ export const playerSlice = createSlice({
             },
             purple: {
                 name: "Purple",
-                type: "",
-                clueNumber: ""
-            },
-            blue: {
-                name: "Light Blue",
                 type: "",
                 clueNumber: ""
             }

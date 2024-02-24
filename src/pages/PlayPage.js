@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PlayingBoard from "../components/PlayingBoard";
 import { Link } from "react-router-dom";
 import { setDummyData } from "../config/boardSlice";
+import BotToolbar from "../components/BotToolbar";
 
 export default function PlayPage() {
 
@@ -15,7 +16,7 @@ export default function PlayPage() {
     return (
         <div className="PlayPage" >
             
-            <h3><Link to="/setup" >{"<"}</Link> Play</h3>
+            <h3><Link to="/setup" >{"< back to setup"}</Link></h3>
             <PlayingBoard />
         </div>
     )

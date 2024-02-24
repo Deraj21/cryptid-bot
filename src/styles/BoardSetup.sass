@@ -43,16 +43,14 @@
         display: flex
         flex-wrap: wrap
         max-width: 740px
-        // margin: 10px
+        margin-left: 50px
         
         .map-chunk
-            // margin: -5px 0px
             
             .chunk-image
                 cursor: grab
                 transform: rotate(0deg)
-                // transition-delay: .1s
-                // transition-duration: .2s
+                transition: transform .3s ease-in-out
                 height: 160px
                 width: 250px
 
@@ -64,15 +62,22 @@
                 transform: scale(1.02)
                 filter: brightness(1.2)
 
+            .draggedOver.rotated
+                transform: rotate(180deg) scale(1.02)
+                filter: brightness(1.2)
+
             .chunk-image-placeholder
                 height: 160px
                 width: 250px
                 cursor: pointer
             
-            .chunk-image.rotated
-                transition-delay: .1s
-                transition-duration: .3s
+            .rotated
                 transform: rotate(180deg)
+                // transition: transform .3s ease-in-out
+
+                &:hover
+                    transform: rotate(180deg) scale(1.02)
+                    filter: brightness(1.2)
                 
 
             

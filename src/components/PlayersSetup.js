@@ -44,7 +44,6 @@ function PlayersSetup() {
                         {name}
                     </InputLabel>
                     <Select labelId={labelId+"color"}
-                        sx={{color: "white"}}
                         value={type}
                         onChange={playerSelectChange(key)}
                         label={name}
@@ -57,7 +56,7 @@ function PlayersSetup() {
                     </Select>
                 </FormControl>
 
-                <TextField label="Clue Number" variant="outlined"
+                <TextField label="Clue Number" variant="filled"
                     sx={{visibility: isVisible}}
                     value={clueNumber === null ? "" : clueNumber}
                     onChange={botClueChange(key)}

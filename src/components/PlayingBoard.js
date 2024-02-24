@@ -5,6 +5,7 @@ import { setMenuAnchor } from "../config/boardSlice";
 
 import Canvas from "./Canvas";
 import ActionMenu from "./ActionMenu";
+import BotToolbar from "./BotToolbar";
 
 const canvasId = "cryptid-board-canvas"
 
@@ -40,6 +41,8 @@ export default function PlayingBoard() {
 
     return (
         <div className="PlayingBoard">
+            <BotToolbar/>
+
             <Canvas id={canvasId}
                 onContextMenu={handleContextMenuClick}
                 height={h}

@@ -123,6 +123,14 @@ a {
   justify-content: space-between;
   width: 420px;
 }
+.SetupPage .player-select-container .MuiSelect-select {
+  background-color: white;
+  border-radius: 5px;
+}
+.SetupPage .player-select-container .MuiTextField-root {
+  background-color: white;
+  border-radius: 5px;
+}
 
 .BoardSetup .placement-container {
   display: flex;
@@ -163,10 +171,12 @@ a {
   display: flex;
   flex-wrap: wrap;
   max-width: 740px;
+  margin-left: 50px;
 }
 .BoardSetup .chunks-container .map-chunk .chunk-image {
   cursor: grab;
   transform: rotate(0deg);
+  transition: transform 0.3s ease-in-out;
   height: 160px;
   width: 250px;
 }
@@ -178,15 +188,21 @@ a {
   transform: scale(1.02);
   filter: brightness(1.2);
 }
+.BoardSetup .chunks-container .map-chunk .draggedOver.rotated {
+  transform: rotate(180deg) scale(1.02);
+  filter: brightness(1.2);
+}
 .BoardSetup .chunks-container .map-chunk .chunk-image-placeholder {
   height: 160px;
   width: 250px;
   cursor: pointer;
 }
-.BoardSetup .chunks-container .map-chunk .chunk-image.rotated {
-  transition-delay: 0.1s;
-  transition-duration: 0.3s;
+.BoardSetup .chunks-container .map-chunk .rotated {
   transform: rotate(180deg);
+}
+.BoardSetup .chunks-container .map-chunk .rotated:hover {
+  transform: rotate(180deg) scale(1.02);
+  filter: brightness(1.2);
 }
 
 .PlayingBoard {
@@ -194,6 +210,10 @@ a {
 }
 .PlayingBoard canvas {
   border: 1px dashed black;
+}
+
+.BotToolbar {
+  color: white;
 }
 
 /*# sourceMappingURL=App.css.map */

@@ -33,10 +33,11 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 ---
 
 `LAST`
-- data converted to json
-- tested with a real game scenario
+- moved action menu to its own component
+- changed player setup form order
+- messed with styles of player-selectform elements
 
 `NEXT`
-- deploy to github pages
+- ?
 
 
