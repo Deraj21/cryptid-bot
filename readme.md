@@ -33,11 +33,10 @@ My wife and I enjoy the board game “Cryptid,” but it can only be played with
 ---
 
 `LAST`
-- moved action menu to its own component
-- changed player setup form order
-- messed with styles of player-selectform elements
+- setup the toolbar menu for the bots to take turns
+- bot buttons display dynamically
 
 `NEXT`
-- ?
+- implement bot turns
 
 
