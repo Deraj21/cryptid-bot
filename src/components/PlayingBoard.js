@@ -41,7 +41,7 @@ export default function PlayingBoard() {
 
     return (
         <div className="PlayingBoard">
-            <BotToolbar/>
+            {/* <BotToolbar/> */}
 
             <Canvas id={canvasId}
                 onContextMenu={handleContextMenuClick}

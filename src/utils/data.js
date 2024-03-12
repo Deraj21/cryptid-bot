@@ -58,6 +58,7 @@ const data = {
     CHUNK_FIT_Y,
     NUM_COLS,
     NUM_ROWS,
+    DEBUG_MODE: false,
 
     randomFromList: function(list) {
         // TODO untested

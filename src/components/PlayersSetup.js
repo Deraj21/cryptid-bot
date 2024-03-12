@@ -5,6 +5,8 @@ import { updatePlayer, updateClue, randomizePlayers } from "../config/playerSlic
 
 import { InputLabel, Select, MenuItem, Switch, FormControl, FormControlLabel, Stack, TextField } from "@mui/material";
 
+import dataHelper from "../utils/data"
+const { DEBUG_MODE } = dataHelper
 
 function PlayersSetup() {
 
@@ -72,7 +74,9 @@ function PlayersSetup() {
     }
 
     return <div className="player-setup">
-        <button onClick={randomizePlayersButtonClick}>Randomize Players</button>
+        <button onClick={randomizePlayersButtonClick}
+            style={{ visibility: DEBUG_MODE ? "visible" : "hidden" }}
+        >Randomize Players</button>
 
         <Stack spacing={1}>
             { playerSelects }

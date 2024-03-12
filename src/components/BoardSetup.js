@@ -8,6 +8,7 @@ import { setClues } from "../config/playerSlice"
 import MapChunk from "./MapChunk"
 import Ruler from "./Ruler"
 import dataHelper from "../utils/data"
+const { DEBUG_MODE, convertSetupToPlay } = dataHelper
 
 export default function BoardSetup() {
     // redux
@@ -85,7 +86,9 @@ export default function BoardSetup() {
     return (
         <div className="BoardSetup">
             <h1>Setup Board</h1>
-            <button onClick={() => dispatch(randomizeBoard())} >Randomize Board</button>
+            <button onClick={() => dispatch(randomizeBoard())}
+                style={{ visibility: DEBUG_MODE ? "visible" : "hidden" }}
+            >Randomize Board</button>
             <div className="placement-container">
                 <h3>{placementLabel}</h3>
                 {
@@ -111,7 +114,7 @@ export default function BoardSetup() {
                                 let chunksCopy = [ ...mapChunks ]
                                 let structuresCopy = [ ...structures ]
 
-                                let hexes = dataHelper.convertSetupToPlay(chunksCopy, structuresCopy)
+                                let hexes = convertSetupToPlay(chunksCopy, structuresCopy)
                                 
                                 dispatch(setHexData(hexes))
                                 dispatch(setClues(players))
