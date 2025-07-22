@@ -24,7 +24,6 @@ export default function BotToolbar() {
     }
 
     const takeSetupTurn = (e) => {
-        // TODO take setup turn
         closeMenu()
     }
 
